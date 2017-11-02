@@ -1,0 +1,30 @@
+<ul>
+  <li><a [routerLink]="['/']">Home</a></li>
+  <li>
+    <a [routerLink]="['/r/politics']">Politics</a>
+    (
+      <a [routerLink]="['/r/politics/rising']">rising</a>,
+      <a [routerLink]="['/r/politics/new']">new</a>,
+      <a [routerLink]="['/r/politics/top']">top</a>
+    )
+  </li>
+  <li>
+    <a [routerLink]="['/r/nba']">NBA</a>
+    (
+      <a [routerLink]="['/r/nba/rising']">rising</a>,
+      <a [routerLink]="['/r/nba/new']">new</a>,
+      <a [routerLink]="['/r/nba/top']">top</a>
+    )
+  </li>
+
+  <li>
+    <a [routerLink]="['/r/warriors']">Warriors</a>
+    (
+      <a [routerLink]="['/r/warriors/rising']">rising</a>,
+      <a [routerLink]="['/r/warriors/new']">new</a>,
+      <a [routerLink]="['/r/warriors/top']">top</a>
+    )
+  </li>
+</ul>
+
+<router-outlet></router-outlet>
