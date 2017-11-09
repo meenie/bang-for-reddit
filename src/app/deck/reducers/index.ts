@@ -1,30 +1,30 @@
 import { createSelector, createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 
-import * as fromRoot from '../../reducers';
-import * as fromSubreddits from './subreddits';
+import * as fromDecks from './decks';
 
-export interface DeckState {
-  subreddits: fromSubreddits.State
+export interface State {
+  decks: fromDecks.State;
 }
 
-export interface State extends fromRoot.State {
-  'deck': DeckState;
-}
-
-export const reducers: ActionReducerMap<DeckState> = {
-  subreddits: fromSubreddits.reducer
+export const reducers: ActionReducerMap<State> = {
+  decks: fromDecks.reducer
 };
 
-export const getDeckState = createFeatureSelector<DeckState>('deck');
+export const selectRootDeckState = createFeatureSelector<State>('decks');
 
-export const getSubredditsState = createSelector(
-  getDeckState,
-  state => state.subreddits
-);
+export const selectDeckState = createSelector(selectRootDeckState, state => state.decks);
 
 export const {
-  selectIds: getSubredditIds,
-  selectEntities: getSubredditEntities,
-  selectAll: getAllSubreddits,
-  selectTotal: getTotalSubreddits,
-} = fromSubreddits.adapter.getSelectors(getSubredditsState);
+  selectEntities: selectDeckEntities,
+  selectAll: selecAllDecks,
+  selectTotal: selectTotalDecks,
+} = fromDecks.adapter.getSelectors(selectDeckState);
+
+
+export const selectCurrentDeckId = createSelector(selectDeckState, state => state.selectedDeckId);
+export const selectCurrentDeck = createSelector(
+  selectDeckEntities,
+  selectCurrentDeckId,
+  (deckEntities, deckId) => deckEntities[deckId]
+);
+export const selectCurrentDeckSubredditIds = createSelector(selectCurrentDeck, state => state.subredditIds)

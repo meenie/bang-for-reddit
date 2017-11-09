@@ -15,7 +15,7 @@ import { reducers } from './reducers/index';
     RouterModule.forChild([
       { path: '', component: ViewDeckComponent },
     ]),
-    StoreModule.forFeature('deck', reducers),
+    StoreModule.forFeature('decks', reducers),
     SubredditModule
   ],
   declarations: [ViewDeckComponent]

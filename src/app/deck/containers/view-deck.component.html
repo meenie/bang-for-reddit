@@ -1,11 +1,11 @@
 <div fxLayout style="height: 100%;">
   <div
-    *ngFor="let subreddit of subreddits$ | async"
+    *ngFor="let subreddit of subredditIds$ | async"
     fxFlex
     fxFlexFill
     style="overflow-y: scroll">
 
-    <bfr-view-subreddit-page [subreddit]="subreddit.id"></bfr-view-subreddit-page>
+    <bfr-view-subreddit-page [subreddit]="subreddit"></bfr-view-subreddit-page>
   </div>
 </div>
 
