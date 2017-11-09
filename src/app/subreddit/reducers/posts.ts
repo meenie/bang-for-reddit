@@ -13,9 +13,9 @@ export function reducer(
   action: SubredditActions.Actions
 ): State {
   switch (action.type) {
-    // case SubredditActions.LOAD_SUCCESS: {
-    //   return adapter.addAll(action.payload.posts, state);
-    // }
+    case SubredditActions.LOAD_SUCCESS: {
+      return adapter.addMany(action.payload.posts, state);
+    }
 
     default: {
       return state;

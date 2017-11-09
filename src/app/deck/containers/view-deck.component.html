@@ -1,4 +1,12 @@
-<div fxLayout style="height: 100%;">
+<div fxLayout fxLayoutGap="20px" fxLayoutAlign="start center" style="height: 10%">
+  <div fxFlex="none">
+    <a routerLink="/d">Default Deck</a>
+  </div>
+  <div fxFlex="none">
+    <a routerLink="/d/basketball">Basketball Deck</a>
+  </div>
+</div>
+<div fxLayout style="height: 90%;">
   <div
     *ngFor="let subreddit of subredditIds$ | async"
     fxFlex

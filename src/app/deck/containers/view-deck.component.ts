@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 
 import * as fromDeck from '../reducers'
 import * as DeckActions from '../actions/deck';
@@ -12,24 +14,32 @@ import { Deck } from '../models/deck';
 })
 export class ViewDeckComponent {
   subredditIds$: Observable<string[]>;
+  actionsSubscription: Subscription;
 
-  constructor(private store: Store<fromDeck.State>) {
-    let deck: Deck = {
-      id: 'default', 
-      subredditIds: ['all', 'politics', 'warriors']
+  constructor(private _store: Store<fromDeck.State>, route: ActivatedRoute) {
+    let defaultDeck: Deck = {
+      id: 'default',
+      subredditIds: ['all', 'politics']
     }
 
-    store.dispatch(new DeckActions.Add(deck));
-    store.dispatch(new DeckActions.Activate('default'));
+    let basketballDeck: Deck = {
+      id: 'basketball',
+      subredditIds: ['nba', 'warriors', 'bostonceltics']
+    }
 
-    setTimeout(() => {
-      let updatedDeck = Object.assign({}, deck);
-      updatedDeck.subredditIds = [...updatedDeck.subredditIds, 'nba']
-      store.dispatch(new DeckActions.Update({id: 'default', changes: updatedDeck}));
-    }, 1000);
+    _store.dispatch(new DeckActions.Add(defaultDeck));
+    _store.dispatch(new DeckActions.Add(basketballDeck));
+
+    this.actionsSubscription = route.params
+      .map(params => new DeckActions.Activate(params.id || 'default'))
+      .subscribe(_store);
   }
 
   ngOnInit() {
-    this.subredditIds$ = this.store.select(fromDeck.selectCurrentDeckSubredditIds);
+    this.subredditIds$ = this._store.select(fromDeck.selectCurrentDeck).map(deck => deck.subredditIds);
+  }
+
+  ngOnDestroy() {
+    this.actionsSubscription.unsubscribe();
   }
 }

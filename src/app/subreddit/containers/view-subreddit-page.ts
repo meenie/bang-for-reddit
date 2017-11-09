@@ -18,20 +18,21 @@ interface AppState {
   selector: 'bfr-view-subreddit-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <bfr-selected-subreddit-page></bfr-selected-subreddit-page>
+    <bfr-selected-subreddit-page [subreddit]="subreddit"></bfr-selected-subreddit-page>
   `
 })
-export class ViewSubredditPageComponent implements OnInit {
-  @Input() subreddit;
+export class ViewSubredditPageComponent {
+  @Input() subreddit: string;
 
-  actionsSubscription: Subscription;
-
-  constructor(private store: Store<fromSubreddit.State>) {}
+  constructor(private _store: Store<fromSubreddit.State>) {}
 
   ngOnInit() {
-    this.store.dispatch(new SubredditActions.Load({
-      subreddit: this.subreddit,
-      type: ''
+    this._store.dispatch(new SubredditActions.Load({
+      id: this.subreddit,
+      type: '',
+      postIds: [],
+      loading: true,
+      loaded: false
     }))
   }
 }

@@ -42,6 +42,4 @@ export function reducer(
   }
 }
 
-export const getSelectedDeckId = (state: State) => {
-  return state.selectedDeckId
-}
+export const getSelectedDeckId = (state: State) => state.selectedDeckId;

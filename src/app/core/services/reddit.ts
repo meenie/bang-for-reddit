@@ -13,6 +13,6 @@ export class RedditService {
   constructor(private http: HttpClient) {}
 
   getSubreddit(subredditParams: any): Observable<any> {
-    return this.http.get(`${this.API_PATH}/${subredditParams.subreddit}/${(subredditParams.type || '')}.json`)
+    return this.http.get(`${this.API_PATH}/${subredditParams.id}/${(subredditParams.type || '')}.json`)
   }
 }

@@ -15,6 +15,7 @@ import { RedditService } from '../../core/services/reddit';
 
 import * as SubredditActions from '../actions/subreddit';
 import { Subreddit } from '../models/subreddit';
+import { Post } from '../models/post';
 
 @Injectable()
 export class SubredditEffects {
@@ -22,13 +23,15 @@ export class SubredditEffects {
   @Effect()
   loadSubreddit$: Observable<Action> = this.actions$
     .ofType<SubredditActions.Load>(SubredditActions.LOAD)
-    .switchMap(action =>
+    .concatMap(action =>
       this.reddit
         .getSubreddit(action.payload)
         .map(subreddit => {
           return {
-            id: action.payload.subreddit,
-            type: action.payload.type,
+            subreddit: {
+              id: action.payload.id,
+              type: action.payload.type,
+            },
             posts: subreddit.data.children.map(post => {
               return {
                 id: post.data.id,
@@ -42,7 +45,7 @@ export class SubredditEffects {
             })
           }
         })
-        .map((subreddit: Subreddit) => new SubredditActions.LoadSuccess(subreddit))
+        .map((subreddit: {subreddit: Subreddit, posts: Post[]}) => new SubredditActions.LoadSuccess(subreddit))
     );
 
   constructor(private actions$: Actions, private reddit: RedditService) {}
