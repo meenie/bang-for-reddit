@@ -1,5 +1,5 @@
 import 'rxjs/add/operator/take';
-import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription'
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,25 +15,23 @@ interface AppState {
 }
 
 @Component({
-  selector: 'bfr-subreddits-page',
+  selector: 'bfr-view-subreddit-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <bfr-selected-subreddit-page></bfr-selected-subreddit-page>
   `
 })
-export class ViewSubredditPageComponent implements OnDestroy {
+export class ViewSubredditPageComponent implements OnInit {
+  @Input() subreddit;
+
   actionsSubscription: Subscription;
 
-  constructor(store: Store<fromSubreddit.State>, route: ActivatedRoute) {
-    this.actionsSubscription = route.params
-      .map(params => new SubredditActions.Load({
-        subreddit: params.subreddit,
-        type: params.type
-      }))
-      .subscribe(store);
-  }
+  constructor(private store: Store<fromSubreddit.State>) {}
 
-  ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
+  ngOnInit() {
+    this.store.dispatch(new SubredditActions.Load({
+      subreddit: this.subreddit,
+      type: ''
+    }))
   }
 }

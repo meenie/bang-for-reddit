@@ -26,14 +26,14 @@ export function reducer(
       };
     }
 
-    case SubredditActions.LOAD_SUCCESS: {
-      return {
-        id: action.payload.id,
-        loaded: true,
-        loading: false,
-        postIds: action.payload.posts.map(post => post.id),
-      };
-    }
+    // case SubredditActions.LOAD_SUCCESS: {
+    //   return {
+    //     id: action.payload.id,
+    //     loaded: true,
+    //     loading: false,
+    //     postIds: action.payload.posts.map(post => post.id),
+    //   };
+    // }
 
     default: {
       return state;

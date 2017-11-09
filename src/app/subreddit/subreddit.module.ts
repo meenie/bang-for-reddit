@@ -18,10 +18,6 @@ import { MaterialModule } from '../shared/material.module';
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild([
-      { path: ':subreddit/:type', component: ViewSubredditPageComponent },
-      { path: ':subreddit', component: ViewSubredditPageComponent }
-    ]),
     StoreModule.forFeature('subreddit', reducers),
     EffectsModule.forFeature([SubredditEffects]),
     MaterialModule,
@@ -31,6 +27,7 @@ import { MaterialModule } from '../shared/material.module';
     ViewSubredditPageComponent,
     SelectedSubredditPage
   ],
-  providers: [RedditService]
+  providers: [RedditService],
+  exports: [ViewSubredditPageComponent]
 })
 export class SubredditModule {}

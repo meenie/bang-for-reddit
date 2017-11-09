@@ -1,4 +1,4 @@
-import { createSelector, createFeatureSelector } from '@ngrx/store';
+import { createSelector, createFeatureSelector, ActionReducerMap } from '@ngrx/store';
 import * as fromPosts from './posts';
 import * as fromMetadata from './metadata';
 import * as fromRoot from '../../reducers';
@@ -12,7 +12,7 @@ export interface State extends fromRoot.State {
   'subreddit': SubredditState;
 }
 
-export const reducers = {
+export const reducers: ActionReducerMap<SubredditState> = {
   posts: fromPosts.reducer,
   metadata: fromMetadata.reducer
 };
