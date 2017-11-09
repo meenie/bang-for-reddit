@@ -24,9 +24,9 @@ export class ViewDeckComponent {
 
     setTimeout(() => {
       let updatedDeck = Object.assign({}, deck);
-      updatedDeck.subredditIds.push('aww');
+      updatedDeck.subredditIds = [...updatedDeck.subredditIds, 'nba']
       store.dispatch(new DeckActions.Update({id: 'default', changes: updatedDeck}));
-    }, 5000);
+    }, 1000);
   }
 
   ngOnInit() {
