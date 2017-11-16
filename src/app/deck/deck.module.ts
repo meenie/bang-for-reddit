@@ -16,11 +16,12 @@ import { reducers } from './reducers/index';
     FlexLayoutModule,
     RouterModule.forChild([
       { path: ':id', component: ViewDeckComponent },
-      { path: '', component: ViewDeckComponent },
+      { path: '', redirectTo: 'default', pathMatch: 'full' },
     ]),
     StoreModule.forFeature('decks', reducers),
     SubredditModule
   ],
+  exports: [RouterModule],
   declarations: [ViewDeckComponent]
 })
 export class DeckModule { }

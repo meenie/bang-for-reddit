@@ -1,27 +1,25 @@
-<form #newDeckForm="ngForm" 
-      (ngSubmit)="onSubmit(newDeckForm)" 
-      fxLayout 
-      fxLayoutGap="20px" 
-      fxLayoutAlign="start center"
-      style="height: 10%">
-  <div fxFlex="none" *ngFor="let deck of decks$ | async">
-    <a [routerLink]="['/d', deck.id]">{{ deck.name }}</a>
-  </div>
-  <div fxFlex="none">
-    <label for="deck-name">Deck Name:</label>
-    <input id="deck-name" [(ngModel)]="deckName" name="deckName" type="text">
-  </div>
-  <div fxFlex="none">
-    <label for="deck-subreddits">Deck Subreddits:</label>
-    <input id="deck-subreddits" [(ngModel)]="deckSubreddits" name="deckSubreddits" type="text">
-  </div>
-  <div fxFlex="none">
-    <button type="submit">Go!</button>
-  </div>
-</form>
-<div fxLayout style="height: 90%;">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <a class="navbar-brand" href="#">Bang!</a>
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item" routerLinkActive="active" *ngFor="let deck of decks$ | async" #rla="routerLinkActive">
+      <a class="nav-link" [routerLink]="['/d', deck.id]">
+        {{ deck.name }}
+        <span class="sr-only" *ngIf="rla.isActive">(current)</span>
+      </a>
+    </li>
+  </ul>
+  <form #newDeckForm="ngForm"
+        class="form-inline my-2 my-lg-0"
+        (ngSubmit)="onSubmit(newDeckForm)">
+    <input class="form-control mr-sm-2" placeholder="Deck Name" [(ngModel)]="deckName" name="deckName" type="text">
+    <input class="form-control mr-sm-2" placeholder="Deck Subreddits" [(ngModel)]="deckSubreddits" name="deckSubreddits" type="text">
+    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add</button>
+  </form>
+</nav>
+
+<div fxLayout class="h-100">
   <bfr-view-subreddit-page
-    class="subreddit-container"
+    class="subreddit-container mt-5 pt-4"
     *ngFor="let subreddit of subredditIds$ | async"
     fxFlex
     [subreddit]="subreddit">
