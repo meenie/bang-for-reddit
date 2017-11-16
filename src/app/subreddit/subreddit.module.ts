@@ -13,8 +13,6 @@ import { RedditService } from '../core/services/reddit';
 import { reducers } from './reducers';
 import { MaterialModule } from '../shared/material.module';
 
-
-
 @NgModule({
   imports: [
     CommonModule,
