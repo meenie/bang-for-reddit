@@ -1,14 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { TimeAgoPipe } from 'time-ago-pipe';
+import { TimeAgoPipe } from '../pipes/time-ago.pipe';
 
 import { MaterialModule } from '../../shared/material.module';
 import { SubredditDetailComponent } from './subreddit-detail';
 
 export const COMPONENTS = [
-  SubredditDetailComponent,
-  TimeAgoPipe
+  SubredditDetailComponent
 ];
 
 @NgModule({
@@ -17,7 +16,7 @@ export const COMPONENTS = [
     MaterialModule,
     FlexLayoutModule
   ],
-  declarations: COMPONENTS,
+  declarations: [...COMPONENTS, TimeAgoPipe],
   exports: COMPONENTS
 })
 export class ComponentsModule {}

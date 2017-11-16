@@ -33,7 +33,7 @@ export class SubredditEffects {
               type: action.payload.type,
             },
             posts: subreddit.data.children.filter(post => {
-              const thirtyMinsAgo = Math.round((new Date()).getTime() / 1000) - (60 * 60);
+              const thirtyMinsAgo = Math.round((new Date()).getTime() / 1000) - (60 * 30);
               return post.data.created_utc > thirtyMinsAgo && post.data.subreddit != 'The_Donald';
             }).map(post => {
               return {

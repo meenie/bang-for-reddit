@@ -1989,7 +1989,7 @@ exports-loader@^0.6.3:
     loader-utils "^1.0.2"
     source-map "0.5.x"
 
-express@^4.13.3:
+express@^4.13.3, express@^4.16.2:
   version "4.16.2"
   resolved "https://registry.yarnpkg.com/express/-/express-4.16.2.tgz#e35c6dfe2d64b7dca0a5cd4f21781be3299e076c"
   dependencies:
@@ -5508,10 +5508,6 @@ through@X.X.X:
 thunky@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/thunky/-/thunky-0.1.0.tgz#bf30146824e2b6e67b0f2d7a4ac8beb26908684e"
-
-time-ago-pipe@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/time-ago-pipe/-/time-ago-pipe-1.2.1.tgz#fb0a15052468d0394cd55ee5e2bf4db141a261c9"
 
 time-stamp@^2.0.0:
   version "2.0.0"

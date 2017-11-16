@@ -6,14 +6,14 @@
       <h5 style="width: 75px">{{ post.score }}</h5>
     </div>
     <div class="mr-2">
-      <img *ngIf="! post.thumbnail" 
-           [alt]="post.title" 
-           src="/assets/reddit-logo.png" 
+      <img *ngIf="! post.thumbnail"
+           [alt]="post.title"
+           src="/assets/reddit-logo.png"
            class="rounded"
            style="width: 100px;">
-      <img *ngIf="post.thumbnail" 
-           [alt]="post.title" 
-           [src]="post.thumbnail" 
+      <img *ngIf="post.thumbnail"
+           [alt]="post.title"
+           [src]="post.thumbnail"
            class="rounded"
            style="width: 100px;">
     </div>
@@ -24,10 +24,12 @@
       <p>
         <a [href]="post.commentsUrl" target="_blank">{{ post.numComments }} Comments</a><br>
         <small>
-          Submitted {{ post.created | timeAgo }} by <a href="https://www.reddit.com/user/{{ post.author }}">{{ post.author }}</a> to <a href="https://www.reddit.com/r/{{ post.subreddit }}">r/{{ post.subreddit }}</a>
+          <a [title]="post.created.toLocaleString()">Submitted {{ post.created | timeAgo }}</a>
+          by <a href="https://www.reddit.com/user/{{ post.author }}" target="_blank">{{ post.author }}</a>
+          to <a href="https://www.reddit.com/r/{{ post.subreddit }}" target="_blank">r/{{ post.subreddit }}</a>
         </small>
       </p>
-      
+
     </div>
   </div>
 </div>

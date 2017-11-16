@@ -2,13 +2,18 @@
   "name": "bang-for-reddit",
   "version": "0.0.0",
   "license": "MIT",
+  "engines": {
+    "node": "~6.11.4",
+    "yarn": "~1.3.2"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "heroku-postbuild": "ng build --prod"
   },
   "private": true,
   "dependencies": {
@@ -30,9 +35,9 @@
     "@ngrx/store": "^4.1.1",
     "bootstrap": "4.0.0-beta.2",
     "core-js": "^2.4.1",
+    "express": "^4.16.2",
     "rxjs": "^5.4.2",
     "shards-ui": "^1.1.1",
-    "time-ago-pipe": "^1.2.1",
     "uuid": "^3.1.0",
     "zone.js": "^0.8.14"
   },
