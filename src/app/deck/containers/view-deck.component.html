@@ -1,19 +1,30 @@
-<div fxLayout fxLayoutGap="20px" fxLayoutAlign="start center" style="height: 10%">
-  <div fxFlex="none">
-    <a routerLink="/d">Default Deck</a>
+<form #newDeckForm="ngForm" 
+      (ngSubmit)="onSubmit(newDeckForm)" 
+      fxLayout 
+      fxLayoutGap="20px" 
+      fxLayoutAlign="start center"
+      style="height: 10%">
+  <div fxFlex="none" *ngFor="let deck of decks$ | async">
+    <a [routerLink]="['/d', deck.id]">{{ deck.name }}</a>
   </div>
   <div fxFlex="none">
-    <a routerLink="/d/basketball">Basketball Deck</a>
+    <label for="deck-name">Deck Name:</label>
+    <input id="deck-name" [(ngModel)]="deckName" name="deckName" type="text">
   </div>
-</div>
+  <div fxFlex="none">
+    <label for="deck-subreddits">Deck Subreddits:</label>
+    <input id="deck-subreddits" [(ngModel)]="deckSubreddits" name="deckSubreddits" type="text">
+  </div>
+  <div fxFlex="none">
+    <button type="submit">Go!</button>
+  </div>
+</form>
 <div fxLayout style="height: 90%;">
-  <div
+  <bfr-view-subreddit-page
+    class="subreddit-container"
     *ngFor="let subreddit of subredditIds$ | async"
     fxFlex
-    fxFlexFill
-    style="overflow-y: scroll">
-
-    <bfr-view-subreddit-page [subreddit]="subreddit"></bfr-view-subreddit-page>
-  </div>
+    [subreddit]="subreddit">
+  </bfr-view-subreddit-page>
 </div>
 
