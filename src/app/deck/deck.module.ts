@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { SubredditModule } from '../subreddit/subreddit.module';
 import { ViewDeckComponent } from './containers/view-deck.component';
@@ -18,7 +17,6 @@ import { reducers } from './reducers/index';
       { path: '', redirectTo: 'default', pathMatch: 'full' },
     ]),
     StoreModule.forFeature('decks', reducers),
-    NgbModule,
     SubredditModule
   ],
   exports: [RouterModule],

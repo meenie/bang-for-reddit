@@ -22,18 +22,30 @@
   }
 }
 
-.subreddit-container {
-  flex: 0 0 33.33%;
+.subreddit-container:only-child {
+  flex: 0 0 100%;
+}
+.subreddit-container:first-child:nth-last-child(2),
+.subreddit-container:first-child:nth-last-child(2) ~ .subreddit-container {
+  flex: 0 0 50%;
+}
+.subreddit-container:first-child:nth-last-child(3),
+.subreddit-container:first-child:nth-last-child(3) ~ .subreddit-container {
+  flex: 0 0 33.333%;
 }
 
 @include media-breakpoint-down(lg) {
   .subreddit-container {
-    flex: 0 0 50%;
+    flex: 0 0 50% !important;
+  }
+
+  .subreddit-container:only-child {
+    flex: 0 0 100% !important;
   }
 }
 
 @include media-breakpoint-down(md) {
   .subreddit-container {
-    flex: 0 0 100%;
+    flex: 0 0 100% !important;
   }
 }
