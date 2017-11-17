@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from '@angular/flex-layout';
 import { TimeAgoPipe } from '../pipes/time-ago.pipe';
 
 import { MaterialModule } from '../../shared/material.module';
@@ -13,8 +12,7 @@ export const COMPONENTS = [
 @NgModule({
   imports: [
     CommonModule,
-    MaterialModule,
-    FlexLayoutModule
+    MaterialModule
   ],
   declarations: [...COMPONENTS, TimeAgoPipe],
   exports: COMPONENTS

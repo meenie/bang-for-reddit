@@ -1,4 +1,5 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, HostListener } from '@angular/core';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -14,7 +15,22 @@ import { Deck } from '../models/deck';
   selector: 'bfr-view-deck',
   templateUrl: './view-deck.component.html',
   styleUrls: ['./view-deck.component.css'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  animations: [
+    trigger('collapse', [
+      state('open', style({
+        overflow: 'hidden',
+        height: '135px',
+      })),
+      state('closed',   style({
+        opacity: '0',
+        overflow: 'hidden',
+        height: '0px'
+      })),
+      transition('closed => open', animate('200ms ease-in-out')),
+      transition('open => closed', animate('200ms ease-in-out'))
+    ])
+  ]
 })
 export class ViewDeckComponent {
   subredditIds$: Observable<string[]>;
@@ -35,6 +51,8 @@ export class ViewDeckComponent {
       subredditIds: ['nba', 'warriors', 'bostonceltics']
     }
   ]
+  public navbarCollapsed: boolean = true;
+  _isNavbarCollapsedAnim = 'closed';
 
   constructor(private _store: Store<fromDeck.State>, private route: ActivatedRoute, private router: Router) {
     _store.dispatch(new DeckActions.Add(this.decks[0]));
@@ -43,6 +61,20 @@ export class ViewDeckComponent {
     this.actionsSubscription = route.params
       .map(params => new DeckActions.Activate(params.id || 'default'))
       .subscribe(_store);
+  }
+
+  toggleNavbar(): void {
+    if(this.navbarCollapsed){
+      this._isNavbarCollapsedAnim = 'open';
+      this.navbarCollapsed = false;
+    } else {
+      this._isNavbarCollapsedAnim = 'closed';
+      this.navbarCollapsed = true;
+    }
+  }
+
+  get isNavbarCollapsedAnim() : string {
+    return this._isNavbarCollapsedAnim;
   }
 
   onSubmit(form) {

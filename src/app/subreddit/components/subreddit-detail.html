@@ -3,7 +3,7 @@
 <h4 *ngIf="subreddit.posts.length == 0 && ! subreddit.subreddit.loading" class="text-center text-muted mt-5">Nothin' Bang'n</h4>
 <div class="list-group m-3">
   <div *ngFor="let post of subreddit.posts; trackBy: trackById"
-       class="list-group-item d-flex" [ngClass]="{'list-group-item-warning': post.score > 100 && post.score < 199, 'list-group-item-danger': post.score > 200}">
+       class="list-group-item d-flex" [ngClass]="{'list-group-item-warning': post.score >= 100 && post.score < 199, 'list-group-item-danger': post.score > 200}">
     <div>
       <h5 style="width: 75px">{{ post.score }}</h5>
     </div>
