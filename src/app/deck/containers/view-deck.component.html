@@ -7,7 +7,7 @@
   <div class="navbar-collapse" [@collapse]="isNavbarCollapsedAnim">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active" *ngFor="let deck of decks$ | async" #rla="routerLinkActive">
-        <a class="nav-link" [routerLink]="['/d', deck.id]" (click)="toggleNavbar()">
+        <a class="nav-link" [routerLink]="['/d', deck.id]" (click)="closeNavbar()">
           {{ deck.name }}
           <span class="sr-only" *ngIf="rla.isActive">(current)</span>
         </a>

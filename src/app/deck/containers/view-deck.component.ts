@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, HostListener } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
@@ -14,18 +14,18 @@ import { Deck } from '../models/deck';
 @Component({
   selector: 'bfr-view-deck',
   templateUrl: './view-deck.component.html',
-  styleUrls: ['./view-deck.component.css'],
+  styleUrls: ['./view-deck.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('collapse', [
       state('open', style({
         overflow: 'hidden',
-        height: '135px',
+        maxHeight: '300px',
       })),
       state('closed',   style({
         opacity: '0',
         overflow: 'hidden',
-        height: '0px'
+        maxHeight: '0'
       })),
       transition('closed => open', animate('200ms ease-in-out')),
       transition('open => closed', animate('200ms ease-in-out'))
@@ -73,6 +73,13 @@ export class ViewDeckComponent {
     }
   }
 
+  closeNavbar(): void {
+    if (! this.navbarCollapsed) {
+      this._isNavbarCollapsedAnim = 'closed';
+      this.navbarCollapsed = true;
+    }
+  }
+
   get isNavbarCollapsedAnim() : string {
     return this._isNavbarCollapsedAnim;
   }
@@ -89,6 +96,7 @@ export class ViewDeckComponent {
     form.reset();
 
     this.router.navigateByUrl(`/d/${id}`);
+    this.closeNavbar();
   }
 
   ngOnInit() {
