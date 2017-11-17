@@ -27,6 +27,16 @@ export class SubredditEffects {
       this.reddit
         .getSubreddit(action.payload)
         .map(subreddit => {
+          if (! subreddit) {
+            return {
+              subreddit: {
+                id: action.payload.id,
+                type: action.payload.type,
+              },
+              posts: []
+            }
+          }
+
           return {
             subreddit: {
               id: action.payload.id,
