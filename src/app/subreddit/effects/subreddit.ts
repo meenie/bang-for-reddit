@@ -17,7 +17,7 @@ export class SubredditEffects {
   loadSubreddit$: Observable<Action> = this.actions$
     .ofType<SubredditActions.Initialize>(SubredditActions.LOAD_POSTS)
     .pipe(
-      concatMap(action =>this.reddit
+      concatMap(action => this.reddit
         .getPosts(action.payload)
         .pipe(
           map(posts => new SubredditActions.LoadPostsSuccess({subreddit: action.payload, posts}))

@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import * as fromDeck from '../reducers'
 import * as DeckActions from '../actions/deck';
 import { Deck } from '../models/deck';
+import { Subscribable } from 'rxjs/Observable';
 
 @Component({
   selector: 'bfr-view-deck',
@@ -19,13 +20,15 @@ export class ViewDeckComponent {
   currentSubredditIds$: Observable<string[]>;
   decks$: Observable<Deck[]>;
   paramsSubscription: Subscription;
+  decksPersistSubscription: Subscription;
 
   constructor(private _store: Store<fromDeck.State>, route: ActivatedRoute, private router: Router) {
-    this.paramsSubscription = route.params
-      .pipe(
-        map(params => new DeckActions.Activate(params.id))
-      )
-      .subscribe(_store);
+    this.paramsSubscription = route.params.pipe(
+      map(params => new DeckActions.Activate(params.id))
+    ).subscribe(_store);
+    this.decksPersistSubscription = _store.select(fromDeck.selectDecksState).pipe(
+      map(decks => new DeckActions.Persist(decks))
+    ).subscribe(_store);
 
     this.currentSubredditIds$ = _store.select(fromDeck.selectCurrentDeckSubredditIds);
     this.decks$ = _store.select(fromDeck.selecAllDecks);
@@ -38,5 +41,6 @@ export class ViewDeckComponent {
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
+    this.decksPersistSubscription.unsubscribe();
   }
 }

@@ -29,9 +29,12 @@ import { environment } from '../environments/environment';
     BrowserAnimationsModule,
     CommonModule,
     HttpClientModule,
-    StoreModule.forRoot(reducers, { 
+    StoreModule.forRoot(reducers, {
       metaReducers,
-      initialState: () => LocalStorageService.loadInitialState()
+      initialState: () => {
+        console.log('STATE!!', LocalStorageService.loadInitialState());
+        return LocalStorageService.loadInitialState()
+      }
     }),
     EffectsModule.forRoot([]),
     RouterModule.forRoot(routes, { useHash: true }),
