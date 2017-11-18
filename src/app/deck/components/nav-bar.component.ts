@@ -1,4 +1,5 @@
-import { Component, Input, ChangeDetectionStrategy, Output, EventEmitter as EE } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy, Output } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import * as uuidv4 from 'uuid/v4';
 
@@ -28,7 +29,7 @@ import { FormGroup } from '@angular/forms';
 })
 export class NavBarComponent {
   @Input() decks: Deck[] = [];
-  @Output() addDeck: EE<Deck> = new EE<Deck>();
+  @Output() addDeck: EventEmitter<Deck> = new EventEmitter<Deck>();
 
   public deckName: string;
   public deckSubreddits: string;
