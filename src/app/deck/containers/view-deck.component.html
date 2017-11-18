@@ -1,0 +1,33 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+  <a class="navbar-brand" href="#">Bang!</a>
+  <button class="navbar-toggler" type="button" (click)="toggleNavbar()"
+          [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="navbar-collapse" [@collapse]="isNavbarCollapsedAnim">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" routerLinkActive="active" *ngFor="let deck of decks$ | async" #rla="routerLinkActive">
+        <a class="nav-link" [routerLink]="['/d', deck.id]" (click)="closeNavbar()">
+          {{ deck.name }}
+          <span class="sr-only" *ngIf="rla.isActive">(current)</span>
+        </a>
+      </li>
+    </ul>
+    <form #newDeckForm="ngForm"
+          class="form-inline my-2 my-lg-0"
+          (ngSubmit)="onSubmit(newDeckForm)">
+      <input class="form-control mr-sm-2" placeholder="Deck Name" [(ngModel)]="deckName" name="deckName" type="text">
+      <input class="form-control mr-sm-2" placeholder="Deck Subreddits" [(ngModel)]="deckSubreddits" name="deckSubreddits" type="text">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add</button>
+    </form>
+  </div>
+</nav>
+
+<div class="h-100 d-flex">
+  <bfr-view-subreddit-page
+    class="subreddit-container mt-5 pt-4 w-100"
+    *ngFor="let subreddit of subredditIds$ | async"
+    [subreddit]="subreddit">
+  </bfr-view-subreddit-page>
+</div>
+

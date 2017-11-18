@@ -1,5 +1,5 @@
-import 'rxjs/add/operator/take';
-import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
+import 'rxjs/add/observable/timer';
+import { Component, ChangeDetectionStrategy, Input, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription'
 import { ActivatedRoute } from '@angular/router';
 
@@ -15,25 +15,40 @@ interface AppState {
 }
 
 @Component({
-  selector: 'bfr-subreddits-page',
+  selector: 'bfr-view-subreddit-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <bfr-selected-subreddit-page></bfr-selected-subreddit-page>
+    <bfr-selected-subreddit-page [subreddit]="subreddit"></bfr-selected-subreddit-page>
   `
 })
-export class ViewSubredditPageComponent implements OnDestroy {
-  actionsSubscription: Subscription;
+export class ViewSubredditPageComponent {
+  @Input() subreddit: string;
 
-  constructor(store: Store<fromSubreddit.State>, route: ActivatedRoute) {
-    this.actionsSubscription = route.params
-      .map(params => new SubredditActions.Load({
-        subreddit: params.subreddit,
-        type: params.type
+  subredditRefresher$: Subscription;
+
+  constructor(private _store: Store<fromSubreddit.State>) {}
+
+  ngOnInit() {
+    this._store.dispatch(new SubredditActions.Load({
+      id: this.subreddit,
+      type: '',
+      postIds: [],
+      loading: true,
+      loaded: false
+    }))
+
+    this.subredditRefresher$ = Observable.timer(5000, 5000).subscribe(() => {
+      this._store.dispatch(new SubredditActions.Load({
+        id: this.subreddit,
+        type: this.subreddit == 'politics' ? 'rising' : '',
+        postIds: [],
+        loading: true,
+        loaded: false
       }))
-      .subscribe(store);
+    })
   }
 
   ngOnDestroy() {
-    this.actionsSubscription.unsubscribe();
+    this.subredditRefresher$.unsubscribe();
   }
 }

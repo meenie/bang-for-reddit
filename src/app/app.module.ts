@@ -1,16 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
-import { 
+import {
   StoreRouterConnectingModule,
-  RouterStateSerializer 
+  RouterStateSerializer
 } from '@ngrx/router-store'
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+
+import { Angulartics2Module } from 'angulartics2';
+import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 import { CoreModule } from './core/core.module'
 import { AppComponent } from './core/containers/app.component';
@@ -21,12 +25,13 @@ import { environment } from '../environments/environment';
 
 @NgModule({
   imports: [
-    BrowserModule,
+    BrowserAnimationsModule,
     CommonModule,
     HttpClientModule,
     StoreModule.forRoot(reducers, { metaReducers }),
     EffectsModule.forRoot([]),
     RouterModule.forRoot(routes, { useHash: true }),
+    Angulartics2Module.forRoot([Angulartics2GoogleAnalytics]),
     StoreRouterConnectingModule,
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     CoreModule.forRoot()

@@ -1,0 +1,37 @@
+<h3 class="text-center">r/{{ subreddit.subreddit.id }}</h3>
+<h4 *ngIf="subreddit.subreddit.loading" class="text-center text-muted mt-5">Loading...</h4>
+<h4 *ngIf="subreddit.posts.length == 0 && ! subreddit.subreddit.loading" class="text-center text-muted mt-5">Nothin' Bang'n</h4>
+<div class="list-group m-3">
+  <div *ngFor="let post of subreddit.posts; trackBy: trackById"
+       class="list-group-item d-flex" [ngClass]="{'list-group-item-warning': post.score >= 100 && post.score < 200, 'list-group-item-danger': post.score >= 200}">
+    <div>
+      <h5 style="width: 75px">{{ post.score }}</h5>
+    </div>
+    <div class="mr-2">
+      <img *ngIf="! post.thumbnail"
+           [alt]="post.title"
+           src="/assets/reddit-logo.png"
+           class="rounded"
+           style="width: 100px;">
+      <img *ngIf="post.thumbnail"
+           [alt]="post.title"
+           [src]="post.thumbnail"
+           class="rounded"
+           style="width: 100px;">
+    </div>
+    <div>
+      <h5 class="mb-1">
+          <a [href]="post.url" target="_blank" [title]="post.title">{{ post.title }}</a>
+      </h5>
+      <p>
+        <a [href]="post.commentsUrl" target="_blank">{{ post.numComments }} Comments</a><br>
+        <small>
+          <a [title]="post.created.toLocaleString()">Submitted {{ post.created | timeAgo }}</a>
+          by <a href="https://www.reddit.com/user/{{ post.author }}" target="_blank">{{ post.author }}</a>
+          to <a href="https://www.reddit.com/r/{{ post.subreddit }}" target="_blank">r/{{ post.subreddit }}</a>
+        </small>
+      </p>
+
+    </div>
+  </div>
+</div>

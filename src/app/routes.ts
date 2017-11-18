@@ -1,9 +1,9 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/r/all', pathMatch: 'full' },
+  { path: '', redirectTo: '/d/default', pathMatch: 'full' },
   {
-    path: 'r',
-    loadChildren: './subreddit/subreddit.module#SubredditModule'
+    path: 'd',
+    loadChildren: './deck/deck.module#DeckModule'
   }
 ]

@@ -1,0 +1,50 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+.subreddit-container {
+  overflow-y: scroll;
+}
+.subreddit-container::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: rgba(170, 170, 170, 0.411); /* or add it to the track */
+}
+/* Add a thumb */
+.subreddit-container::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.226);
+}
+
+@include media-breakpoint-up(lg) {
+  .navbar-collapse {
+    opacity: 1 !important;
+    max-height: inherit !important;
+  }
+}
+
+.subreddit-container {
+  flex: 0 0 33.333%;
+}
+.subreddit-container:only-child {
+  flex: 0 0 100%;
+}
+.subreddit-container:first-child:nth-last-child(2),
+.subreddit-container:first-child:nth-last-child(2) ~ .subreddit-container {
+  flex: 0 0 50%;
+}
+
+@include media-breakpoint-down(lg) {
+  .subreddit-container {
+    flex: 0 0 50% !important;
+  }
+
+  .subreddit-container:only-child {
+    flex: 0 0 100% !important;
+  }
+}
+
+@include media-breakpoint-down(md) {
+  .subreddit-container {
+    flex: 0 0 100% !important;
+  }
+}

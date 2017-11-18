@@ -6,7 +6,10 @@ import { AppComponent } from './containers/app.component'
 import { RedditService } from './services/reddit';
 
 @NgModule({
-  imports: [CommonModule, RouterModule],
+  imports: [
+    CommonModule,
+    RouterModule
+  ],
   declarations: [AppComponent],
   exports: [AppComponent]
 })

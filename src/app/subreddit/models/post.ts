@@ -5,5 +5,6 @@ export interface Post {
   commentsUrl: string;
   numComments: number;
   score: number;
+  thumbnail: string;
   created: Date;
 }
