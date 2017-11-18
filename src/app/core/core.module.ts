@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './containers/app.component'
 import { RedditService } from './services/reddit';
+import { LocalStorageService } from './services/local-storage';
 
 @NgModule({
   imports: [
@@ -17,7 +18,10 @@ export class CoreModule {
   static forRoot() {
     return {
       ngModule: CoreModule,
-      providers: [RedditService]
+      providers: [
+        RedditService,
+        LocalStorageService
+      ]
     }
   }
 }
