@@ -1,0 +1,10 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+
+@include media-breakpoint-up(lg) {
+  .navbar-collapse {
+    opacity: 1 !important;
+    max-height: inherit !important;
+  }
+}

@@ -3,7 +3,7 @@ import { Deck } from '../models/deck';
 
 export const ADD = '[Deck] Add';
 export const REMOVE = '[Deck] Remove';
-export const ACTIVATE = '[Deck] Load';
+export const ACTIVATE = '[Deck] Activate';
 export const UPDATE = '[Deck] Update';
 
 export class Add implements Action {

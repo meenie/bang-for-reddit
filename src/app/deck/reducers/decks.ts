@@ -9,7 +9,20 @@ export interface State extends EntityState<Deck> {
 export const adapter: EntityAdapter<Deck> = createEntityAdapter<Deck>();
 
 export const initialState: State = adapter.getInitialState({
-  selectedDeckId: null
+  selectedDeckId: null,
+  ids: ['default', 'basketball'],
+  entities: {
+    default: {
+      id: 'default',
+      name: 'Default Deck',
+      subredditIds: ['all', 'politics']
+    },
+    basketball: {
+      id: 'basketball',
+      name: 'Basketball Deck',
+      subredditIds: ['nba', 'warriors', 'bostonceltics']
+    }
+  }
 });
 
 export function reducer(

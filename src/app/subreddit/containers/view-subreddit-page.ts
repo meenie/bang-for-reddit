@@ -4,48 +4,58 @@ import { Subscription } from 'rxjs/Subscription'
 import { ActivatedRoute } from '@angular/router';
 
 import { Store } from '@ngrx/store';
+
 import { Observable } from 'rxjs/Observable';
+import { map } from 'rxjs/operators';
 
 import * as fromSubreddit from '../reducers';
 import * as SubredditActions from '../actions/subreddit';
-
-
-interface AppState {
-  counter: number;
-}
+import { Subreddit } from '../models/subreddit';
+import { Post } from '../models/post';
 
 @Component({
   selector: 'bfr-view-subreddit-page',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <bfr-selected-subreddit-page [subreddit]="subreddit"></bfr-selected-subreddit-page>
+    <bfr-subreddit-detail
+      [subreddit]="subreddit$ | async">
+    </bfr-subreddit-detail>
   `
 })
 export class ViewSubredditPageComponent {
-  @Input() subreddit: string;
+  @Input() subredditId: string;
 
   subredditRefresher$: Subscription;
+  subreddit$: Observable<{subreddit: Subreddit, posts: Post[]}>;
+  private subreddit: Subreddit;
 
   constructor(private _store: Store<fromSubreddit.State>) {}
 
   ngOnInit() {
-    this._store.dispatch(new SubredditActions.Load({
-      id: this.subreddit,
-      type: '',
+    const subreddit = {
+      id: this.subredditId,
+      type: 'rising',
       postIds: [],
       loading: true,
       loaded: false
-    }))
+    };
 
-    this.subredditRefresher$ = Observable.timer(5000, 5000).subscribe(() => {
-      this._store.dispatch(new SubredditActions.Load({
-        id: this.subreddit,
-        type: this.subreddit == 'politics' ? 'rising' : '',
-        postIds: [],
-        loading: true,
-        loaded: false
-      }))
-    })
+    this._store.dispatch(new SubredditActions.Initialize(subreddit))
+    this.subredditRefresher$ = Observable
+      .timer(0, 5000)
+      .pipe(
+        map(() => new SubredditActions.LoadPosts(subreddit))
+      ).subscribe(this._store)
+
+    this.subreddit$ = this._store.select(fromSubreddit.selectSubredditWithPosts(this.subredditId)).pipe(
+      map(subreddit => {
+        subreddit.posts = subreddit.posts.filter(post => {
+          const sixtyMinutesAgo = Math.round((new Date()).getTime()) - (60 * 60 * 1000);
+          return post.created.getTime() > sixtyMinutesAgo;
+        })
+        return subreddit
+      })
+    );
   }
 
   ngOnDestroy() {

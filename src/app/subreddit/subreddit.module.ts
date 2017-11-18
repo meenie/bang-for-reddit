@@ -7,7 +7,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { ComponentsModule } from './components'
 import { SubredditEffects } from './effects/subreddit';
 import { ViewSubredditPageComponent } from './containers/view-subreddit-page';
-import { SelectedSubredditPage } from './containers/selected-subreddit-page';
 
 import { RedditService } from '../core/services/reddit';
 import { reducers } from './reducers';
@@ -20,8 +19,7 @@ import { reducers } from './reducers';
     ComponentsModule,
   ],
   declarations: [
-    ViewSubredditPageComponent,
-    SelectedSubredditPage
+    ViewSubredditPageComponent
   ],
   providers: [RedditService],
   exports: [ViewSubredditPageComponent]

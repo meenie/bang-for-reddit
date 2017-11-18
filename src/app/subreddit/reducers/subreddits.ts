@@ -13,11 +13,11 @@ export function reducer(
   action: SubredditActions.Actions
 ): State {
   switch (action.type) {
-    case SubredditActions.LOAD: {
+    case SubredditActions.INITIALIZE: {
       return adapter.addOne({...action.payload, loading: true}, state);
     }
 
-    case SubredditActions.LOAD_SUCCESS: {
+    case SubredditActions.LOAD_POSTS_SUCCESS: {
       let subreddit = action.payload.subreddit;
       return adapter.updateOne({id: subreddit.id, changes: {
         ...subreddit,

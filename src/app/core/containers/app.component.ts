@@ -3,7 +3,7 @@ import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html'
+  template: `<router-outlet></router-outlet>`
 })
 export class AppComponent {
   title = 'app';

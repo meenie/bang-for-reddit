@@ -28,6 +28,11 @@ export const selectCurrentDeck = createSelector(
   (deckEntities, deckId) => deckEntities[deckId]
 );
 
+export const selectCurrentDeckSubredditIds = createSelector(
+  selectCurrentDeck,
+  (deck) => deck ? deck.subredditIds : []
+)
+
 export const selectDeckById = (id: string) => createSelector(
   selectDeckEntities,
   (deckEntities) => deckEntities[id]
