@@ -12,26 +12,25 @@
 }
 /* Add a thumb */
 .subreddit-container::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.226); 
+    background: rgba(0, 0, 0, 0.226);
 }
 
-@include media-breakpoint-up(lg) { 
+@include media-breakpoint-up(lg) {
   .navbar-collapse {
     opacity: 1 !important;
     max-height: inherit !important;
   }
 }
 
+.subreddit-container {
+  flex: 0 0 33.333%;
+}
 .subreddit-container:only-child {
   flex: 0 0 100%;
 }
 .subreddit-container:first-child:nth-last-child(2),
 .subreddit-container:first-child:nth-last-child(2) ~ .subreddit-container {
   flex: 0 0 50%;
-}
-.subreddit-container:first-child:nth-last-child(3),
-.subreddit-container:first-child:nth-last-child(3) ~ .subreddit-container {
-  flex: 0 0 33.333%;
 }
 
 @include media-breakpoint-down(lg) {

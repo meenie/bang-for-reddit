@@ -11,14 +11,12 @@ import { SelectedSubredditPage } from './containers/selected-subreddit-page';
 
 import { RedditService } from '../core/services/reddit';
 import { reducers } from './reducers';
-import { MaterialModule } from '../shared/material.module';
 
 @NgModule({
   imports: [
     CommonModule,
     StoreModule.forFeature('subreddit', reducers),
     EffectsModule.forFeature([SubredditEffects]),
-    MaterialModule,
     ComponentsModule,
   ],
   declarations: [
