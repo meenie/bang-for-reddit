@@ -31,10 +31,7 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
-      initialState: () => {
-        console.log('STATE!!', LocalStorageService.loadInitialState());
-        return LocalStorageService.loadInitialState()
-      }
+      initialState: () => LocalStorageService.loadInitialState()
     }),
     EffectsModule.forRoot([]),
     RouterModule.forRoot(routes, { useHash: true }),
