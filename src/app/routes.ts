@@ -4,6 +4,6 @@ export const routes: Routes = [
   { path: '', redirectTo: '/d/default', pathMatch: 'full' },
   {
     path: 'd',
-    loadChildren: './deck/deck.module#DeckModule'
+    loadChildren: './decks/decks.module#DecksModule'
   }
 ]
