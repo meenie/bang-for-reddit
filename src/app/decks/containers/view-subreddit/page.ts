@@ -4,9 +4,9 @@ import {
   Input, 
   Output, 
   OnInit, 
-  OnDestroy,
-  EventEmitter 
+  OnDestroy 
 } from '@angular/core';
+import { EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription'
 import { ActivatedRoute } from '@angular/router';
 

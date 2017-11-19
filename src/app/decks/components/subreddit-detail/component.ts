@@ -1,5 +1,6 @@
 
-import { Component, Input, Output, ChangeDetectionStrategy, EventEmitter} from '@angular/core';
+import { Component, Input, Output, ChangeDetectionStrategy} from '@angular/core';
+import { EventEmitter } from '@angular/core';
 
 import { Post } from '../../models/post';
 import { Subreddit } from '../../models/subreddit';
