@@ -24,6 +24,10 @@ import { routes } from './routes';
 import { reducers, metaReducers } from './reducers';
 import { environment } from '../environments/environment';
 
+export function getInitialState() {
+  return LocalStorageService.loadInitialState();
+}
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
@@ -31,7 +35,7 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
-      initialState: () => LocalStorageService.loadInitialState()
+      initialState: getInitialState
     }),
     EffectsModule.forRoot([]),
     RouterModule.forRoot(routes, { useHash: true }),
