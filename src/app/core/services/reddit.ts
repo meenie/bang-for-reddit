@@ -13,7 +13,7 @@ export class RedditService {
   getPosts(subredditParams: {id: string, type: string}): Observable<any> {
     const { id, type = 'rising' } = subredditParams;
     return this.http
-      .get(`${this.REDDIT_URL}/r/${id}/${(type)}.json`)
+      .get(`${this.REDDIT_URL}/r/${id}${(type ? '/' + type : '')}.json?t=${(new Date()).getTime()}`)
       .pipe(
         catchError(err => of(false)),
         map((subreddit: any) => {
