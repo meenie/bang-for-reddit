@@ -22,7 +22,7 @@
           class="form-inline my-2 my-lg-0"
           (ngSubmit)="onSubmit(newDeckForm)">
       <input class="form-control mr-sm-2" placeholder="Deck Name" [(ngModel)]="deckName" name="deckName" type="text">
-      <input class="form-control mr-sm-2" placeholder="Deck Subreddits" [(ngModel)]="deckSubreddits" name="deckSubreddits" type="text">
+      <input class="form-control mr-sm-2" placeholder="Subreddits (comma delimited)" [(ngModel)]="deckSubreddits" name="deckSubreddits" type="text">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add</button>
     </form>
   </div>

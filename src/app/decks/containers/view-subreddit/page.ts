@@ -74,14 +74,6 @@ export class ViewSubredditPage implements OnInit, OnDestroy {
     this.posts$ = this._store.select(fromSubreddit.selectSubredditPosts(this.subredditId)).pipe(
       withLatestFrom(this.settings$),
       map(([posts, settings]) => {
-        // Only want to ween out old rising posts
-        if (settings.type == 'rising') {
-          posts = posts.filter(post => {
-            const sixtyMinutesAgo = Math.round((new Date()).getTime()) - (60 * 60 * 1000);
-            return post.created.getTime() > sixtyMinutesAgo;
-          })
-        }
-
         if (settings.type == 'new') {
           posts = posts.sort((a, b) => b.created.getTime() - a.created.getTime())
         }
