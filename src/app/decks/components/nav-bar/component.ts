@@ -30,6 +30,7 @@ import { FormGroup } from '@angular/forms';
 export class NavBarComponent {
   @Input() decks: Deck[] = [];
   @Output() addDeck: EventEmitter<Deck> = new EventEmitter<Deck>();
+  @Output() removeDeck: EventEmitter<string> = new EventEmitter<string>();
 
   public deckName: string;
   public deckSubreddits: string;

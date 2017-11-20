@@ -12,3 +12,13 @@
 input.form-control {
   width: 240px;
 }
+
+@include media-breakpoint-down(md) {
+  .nav-link {
+    margin-right: 0.5rem;
+  }
+}
+
+.delete-deck {
+  cursor: pointer;
+}

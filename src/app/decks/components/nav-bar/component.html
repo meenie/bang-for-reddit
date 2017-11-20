@@ -1,21 +1,24 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <a class="navbar-brand" href="#">Bang!</a>
-  <button class="navbar-toggler" 
-          type="button" 
+  <button class="navbar-toggler"
+          type="button"
           (click)="toggleNavbar()"
-          [attr.aria-expanded]="!navbarCollapsed" 
-          aria-controls="navbarContent" 
-          aria-expanded="false" 
+          [attr.aria-expanded]="!navbarCollapsed"
+          aria-controls="navbarContent"
+          aria-expanded="false"
           aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="navbar-collapse" [@collapse]="isNavbarCollapsedAnim">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item" routerLinkActive="active" *ngFor="let deck of decks" #rla="routerLinkActive">
-        <a class="nav-link" [routerLink]="['/d', deck.id]" (click)="closeNavbar()">
+        <a class="nav-link float-left" [routerLink]="['/d', deck.id]" (click)="closeNavbar()">
           {{ deck.name }}
           <span class="sr-only" *ngIf="rla.isActive">(current)</span>
         </a>
+        <small *ngIf="deck.id != 'default'" class="delete-deck float-left">
+          <a (click)="removeDeck.emit(deck.id)" title="Delete deck">&times;</a>
+        </small>
       </li>
     </ul>
     <form #newDeckForm="ngForm"

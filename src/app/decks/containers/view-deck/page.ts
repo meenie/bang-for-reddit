@@ -20,12 +20,17 @@ export class ViewDeckPage {
   currentSubredditIds$: Observable<string[]>;
   decks$: Observable<Deck[]>;
   currentDeckId$: Observable<string>;
+  // HACK
+  currentDeckId: string;
   paramsSubscription: Subscription;
   decksPersistSubscription: Subscription;
 
-  constructor(private _store: Store<reducers.State>, route: ActivatedRoute, private router: Router) {
+  constructor(private _store: Store<reducers.State>, private route: ActivatedRoute, private router: Router) {
     this.paramsSubscription = route.params.pipe(
-      map(params => new DeckActions.Activate(params.id))
+      map(params => {
+        this.currentDeckId = params.id;
+        return new DeckActions.Activate(params.id)
+      })
     ).subscribe(_store);
     this.decksPersistSubscription = _store.select(reducers.selectDecksState).pipe(
       map(decks => new DeckActions.Persist(decks))
@@ -47,6 +52,13 @@ export class ViewDeckPage {
 
   onSetSort(event: {id: string, subredditId: string, sort: string}) {
     this._store.dispatch(new DeckActions.SetSort(event));
+  }
+
+  onRemoveDeck(event: string) {
+    this._store.dispatch(new DeckActions.Remove(event));
+    if (this.currentDeckId == event) {
+      this.router.navigateByUrl('/d/default');
+    }
   }
 
   ngOnDestroy() {
