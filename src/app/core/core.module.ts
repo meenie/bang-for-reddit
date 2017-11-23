@@ -30,12 +30,12 @@ export function getInitialState() {
     CommonModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: '', redirectTo: '/d/default', pathMatch: 'full' },
       {
         path: 'd',
         loadChildren: '../decks/decks.module#DecksModule'
-      }
-    ], { useHash: true }),
+      },
+      { path: '**', redirectTo: '/d/default' },
+    ]),
     StoreModule.forRoot(reducers, {
       metaReducers,
       initialState: getInitialState
