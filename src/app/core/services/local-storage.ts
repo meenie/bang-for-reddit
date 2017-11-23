@@ -1,3 +1,7 @@
+/**
+ * LocalStorage Service borrowed from https://github.com/tomastrajan/angular-ngrx-material-starter
+ */
+
 import { Injectable } from '@angular/core';
 
 const APP_PREFIX = 'BRF-';

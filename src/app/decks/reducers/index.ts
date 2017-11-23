@@ -42,7 +42,6 @@ export const {
   selectTotal: selectTotalSubreddits,
 } = fromSubreddits.adapter.getSelectors(selectSubredditsState);
 
-
 export const selectCurrentDeckId = createSelector(selectDecksState, state => state.selectedDeckId);
 export const selectCurrentDeck = createSelector(
   selectDeckEntities,
