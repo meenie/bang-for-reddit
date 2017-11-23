@@ -4,12 +4,15 @@ import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 
 import { TimeAgoPipe } from '../pipes/time-ago.pipe';
+import { AbbrevNumberPipe } from '../pipes/abbrev-number.pipe';
 import { NavBarComponent } from './nav-bar/component';
 import { SubredditDetailComponent } from './subreddit-detail/component';
 
 export const COMPONENTS = [
   NavBarComponent,
-  SubredditDetailComponent
+  SubredditDetailComponent,
+  AbbrevNumberPipe,
+  TimeAgoPipe
 ];
 
 @NgModule({
@@ -18,7 +21,7 @@ export const COMPONENTS = [
     RouterModule,
     FormsModule
   ],
-  declarations: [...COMPONENTS, TimeAgoPipe],
+  declarations: COMPONENTS,
   exports: COMPONENTS
 })
 export class ComponentsModule {}
