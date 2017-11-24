@@ -9,8 +9,8 @@ const packageJson = require('./package.json');
 
 app.use(sslRedirect(['production'], 301));
 app.use(express.static(path.join(__dirname, 'dist')));
-app.get('/check-version', (req, res) => {
-  res.send(packageJson.version);
+app.get('/version', (req, res) => {
+  res.send(`{"version": "${packageJson.version}"}`);
 });
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
