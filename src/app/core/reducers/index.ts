@@ -16,6 +16,7 @@ import * as fromRouter from '@ngrx/router-store';
  */
 import { storeFreeze } from 'ngrx-store-freeze';
 
+import * as fromVersion from './version';
 
 /**
  * As mentioned, we treat each reducer like a table in a database. This means
@@ -23,6 +24,7 @@ import { storeFreeze } from 'ngrx-store-freeze';
  */
 export interface State {
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
+  version: fromVersion.State;
 }
 
 /**
@@ -32,6 +34,7 @@ export interface State {
  */
 export const reducers: ActionReducerMap<State> = {
   routerReducer: fromRouter.routerReducer,
+  version: fromVersion.reducer
 };
 
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
@@ -51,3 +54,13 @@ export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
 export const metaReducers: MetaReducer<State>[] = !environment.production
   ? [/*logger, */storeFreeze]
   : [];
+
+/**
+ * Version Reducers
+ */
+export const getVersionState = createFeatureSelector<fromVersion.State>('version');
+
+export const getIsVersionValid = createSelector(
+  getVersionState,
+  fromVersion.getIsValid
+);
