@@ -31,7 +31,7 @@ export class AppComponent implements OnInit {
     });
 
     if (environment.production) {
-      timer(0, 1000 * 30).pipe(
+      timer(5000, 1000 * 30).pipe(
         withLatestFrom(isValid$),
         map(([_, isValid]) => {
           return isValid ? new VersionActions.Check() : undefined;
