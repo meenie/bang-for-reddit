@@ -19,11 +19,14 @@ import { VersionService } from './services/version';
 import { environment } from '../../environments/environment';
 import { CustomRouterStateSerializer } from './utils/custom-router-state-serializer';
 
-import { reducers, metaReducers } from './reducers';
+import { reducers, metaReducers, initialState } from './reducers';
 import { VersionEffects } from './effects/version';
 
 export function getInitialState() {
-  return LocalStorageService.loadInitialState();
+  return {
+    ...LocalStorageService.loadInitialState(),
+    ...initialState
+  };
 }
 
 @NgModule({

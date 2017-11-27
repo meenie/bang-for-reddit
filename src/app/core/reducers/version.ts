@@ -6,7 +6,7 @@ export interface State {
   isValid: boolean;
 }
 
-const initialState: State = {
+export const initialState: State = {
   version: environment.version,
   isValid: true
 }

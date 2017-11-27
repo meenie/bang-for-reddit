@@ -37,6 +37,10 @@ export const reducers: ActionReducerMap<State> = {
   version: fromVersion.reducer
 };
 
+export const initialState = {
+  version: fromVersion.initialState
+}
+
 export function logger(reducer: ActionReducer<State>): ActionReducer<State> {
   return function(state: State, action: any): State {
     console.log('state', state);
