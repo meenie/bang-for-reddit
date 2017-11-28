@@ -31,8 +31,9 @@
            style="width: 100px;">
     </div>
     <div>
-      <h5 class="mb-1">
+      <h5 class="mb-1 post-title">
           <a [href]="post.url" target="_blank" [title]="post.title">{{ post.title }}</a>
+          <a class="ml-2" [href]="post.domainUrl" target="_blank"><small>{{ post.domain }}</small></a>
       </h5>
       <p>
         <a [href]="post.commentsUrl" target="_blank">{{ post.numComments }} Comments</a><br>

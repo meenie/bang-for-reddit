@@ -34,7 +34,11 @@ export class RedditService {
               thumbnail: post.data.thumbnail.slice(0, 4) == 'http' ? post.data.thumbnail : '',
               created: new Date(post.data.created_utc * 1000),
               commentsUrl: `${this.REDDIT_URL}${post.data.permalink}`,
-              numComments: post.data.num_comments
+              numComments: post.data.num_comments,
+              domain: post.data.domain,
+              domainUrl: post.data.domain.slice(0, 5) == 'self.' ?
+                `${this.REDDIT_URL}/r/${post.data.subreddit}` :
+                `${this.REDDIT_URL}/domain/${post.data.domain}`
             }))
         }),
       )

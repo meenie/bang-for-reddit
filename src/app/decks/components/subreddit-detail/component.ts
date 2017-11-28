@@ -8,6 +8,7 @@ import { Subreddit } from '../../models/subreddit';
 @Component({
   selector: 'bfr-subreddit-detail',
   templateUrl: './component.html',
+  styleUrls: ['./component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SubredditDetailComponent {
