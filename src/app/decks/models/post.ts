@@ -6,5 +6,7 @@ export interface Post {
   numComments: number;
   score: number;
   thumbnail: string;
+  author: string;
+  subreddit: string;
   created: Date;
 }
