@@ -8,5 +8,7 @@ export interface Post {
   thumbnail: string;
   author: string;
   subreddit: string;
+  domain: string;
+  domainUrl: string;
   created: Date;
 }
