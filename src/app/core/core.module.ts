@@ -13,14 +13,11 @@ import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
 import { AppComponent } from './components/app.component'
-import { RedditService } from './services/reddit';
-import { LocalStorageService } from './services/local-storage';
-import { VersionService } from './services/version';
+import { services, LocalStorageService } from './services';
 import { environment } from '../../environments/environment';
 import { CustomRouterStateSerializer } from './utils/custom-router-state-serializer';
 
-import { reducers, metaReducers, initialState } from './reducers';
-import { VersionEffects } from './effects/version';
+import { reducers, metaReducers, initialState, effects } from './store';
 
 export function getInitialState() {
   return {
@@ -46,7 +43,7 @@ export function getInitialState() {
       initialState: getInitialState
     }),
     StoreRouterConnectingModule,
-    EffectsModule.forRoot([VersionEffects]),
+    EffectsModule.forRoot(effects),
     !environment.production ? StoreDevtoolsModule.instrument() : [],
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
   ],
@@ -59,11 +56,7 @@ export class CoreModule {
   static forRoot() {
     return {
       ngModule: CoreModule,
-      providers: [
-        RedditService,
-        LocalStorageService,
-        VersionService
-      ]
+      providers: services
     }
   }
 }

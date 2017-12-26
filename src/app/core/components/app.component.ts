@@ -5,8 +5,8 @@ import { Subscription } from 'rxjs/Subscription';
 import { timer } from 'rxjs/observable/timer';
 import { map, withLatestFrom } from 'rxjs/operators'
 
-import * as fromCore from '../reducers';
-import * as VersionActions from '../actions/version';
+import * as fromCore from '../store';
+import * as VersionActions from '../store/actions/version.action';
 import { environment } from '../../../environments/environment';
 
 @Component({

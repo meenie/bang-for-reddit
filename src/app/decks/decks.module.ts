@@ -1,28 +1,27 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 
-import { ComponentsModule } from './components';
-import { ViewDeckPage } from './containers/view-deck/page';
-import { ViewSubredditPage } from './containers/view-subreddit/page';
-
-import { reducers } from './reducers/index';
-import { DeckEffects } from './effects/deck';
-import { SubredditEffects } from './effects/subreddit';
+import * as fromContainers from './containers';
+import * as fromComponents from './components';
+import * as fromStore from './store';
+import * as fromPipes from './pipes';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild([
-      { path: ':id', component: ViewDeckPage },
+      { path: ':id', component: fromContainers.ViewDeckComponent },
       { path: '', redirectTo: 'default', pathMatch: 'full' },
     ]),
-    StoreModule.forFeature('decks', reducers),
-    ComponentsModule,
-    EffectsModule.forFeature([DeckEffects, SubredditEffects])
+    FormsModule,
+    StoreModule.forFeature('decks', fromStore.reducers),
+    EffectsModule.forFeature(fromStore.effects)
   ],
-  declarations: [ViewDeckPage, ViewSubredditPage]
+  declarations: [...fromContainers.components, ...fromComponents.components, ...fromPipes.pipes],
+  exports: [...fromContainers.components, ...fromComponents.components, ...fromPipes.pipes]
 })
 export class DecksModule { }
