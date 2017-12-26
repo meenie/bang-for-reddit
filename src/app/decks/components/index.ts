@@ -7,10 +7,12 @@ import { TimeAgoPipe } from '../pipes/time-ago.pipe';
 import { AbbrevNumberPipe } from '../pipes/abbrev-number.pipe';
 import { NavBarComponent } from './nav-bar/component';
 import { SubredditDetailComponent } from './subreddit-detail/component';
+import { PostDetailComponent } from './post-detail/component';
 
 export const COMPONENTS = [
   NavBarComponent,
   SubredditDetailComponent,
+  PostDetailComponent,
   AbbrevNumberPipe,
   TimeAgoPipe
 ];

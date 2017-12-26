@@ -15,12 +15,16 @@ export function reducer(
 ): State {
   switch (action.type) {
     case SubredditActions.INITIALIZE: {
-      return adapter.addOne({
-        id: action.payload, 
+      const data = {
+        id: action.payload,
         loading: true,
         loaded: false,
         postIds: []
-      }, state);
+      };
+
+      // TODO: Use upsertMany when the method becomes available
+      state = adapter.addOne(data, state);
+      return adapter.updateOne({id: data.id, changes: data}, state);
     }
 
     case SubredditActions.LOAD_POSTS: {
@@ -30,7 +34,7 @@ export function reducer(
         ...subreddit,
         loading: true
       }}, state);
-    } 
+    }
 
     case SubredditActions.LOAD_POSTS_SUCCESS: {
       const subreddit = state.entities[action.payload.id];
