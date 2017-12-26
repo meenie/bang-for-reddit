@@ -1,6 +1,6 @@
 {
   "name": "bang-for-reddit",
-  "version": "0.8.2",
+  "version": "0.9.0",
   "license": "MIT",
   "engines": {
     "node": "~8.9.1",
