@@ -1,21 +1,56 @@
 import { Injectable } from '@angular/core';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import { tap } from 'rxjs/operators';
+import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
 
 import { LocalStorageService } from '../../../core/services/local-storage.service';
-import * as DeckActions from '../actions/deck.action';
+
+import * as fromStore from '../../../core/store';
+import * as fromDeckSelectors from '../selectors/decks.selectors';
+import * as fromDeck from '../actions/deck.action';
+import * as fromRouter from '../../../core/store/actions/router.action';
 
 @Injectable()
 export class DeckEffects {
 
   @Effect({ dispatch: false })
-  persistDecks$: Observable<Action> = this.actions$
-    .ofType<DeckActions.PersistDeck>(DeckActions.PERSIST_DECK)
+  persistDecks$ = this.actions$
+    .ofType<fromDeck.AddDeck
+      | fromDeck.RemoveDeck
+      | fromDeck.SetDeckSubredditSort
+      | fromDeck.SetDeckSubredditType
+    >(
+      fromDeck.ADD_DECK,
+      fromDeck.REMOVE_DECK,
+      fromDeck.SET_DECK_SUBREDDIT_SORT,
+      fromDeck.SET_DECK_SUBREDDIT_TYPE
+    )
     .pipe(
-      tap((action: DeckActions.PersistDeck) => this.localStorage.setItem(DeckActions.DECKS_KEY, action.payload))
+      withLatestFrom(this.store.select(fromDeckSelectors.getDecksState)),
+      tap(([_, decksState]) => this.localStorage.setItem(fromDeck.DECKS_KEY, decksState))
     )
 
-  constructor(private actions$: Actions, private localStorage: LocalStorageService) {}
+  @Effect()
+  removeDeckRedirect$: Observable<Action> = this.actions$
+    .ofType<fromDeck.RemoveDeck>(fromDeck.REMOVE_DECK)
+    .pipe(
+      map(action => action.payload),
+      withLatestFrom(this.store.select(fromDeckSelectors.getCurrentDeckId)),
+      filter(([deckId, currentDeckId]) => deckId === currentDeckId),
+      map(([deckId, currentDeckId]) => new fromRouter.Go({path: ['/d', 'default']}))
+    )
+
+  @Effect()
+  addDeckRedirect$: Observable<Action> = this.actions$
+    .ofType<fromDeck.AddDeck>(fromDeck.ADD_DECK)
+    .pipe(
+      map(action => new fromRouter.Go({path: ['/d', action.payload.id]}))
+    )
+
+  constructor(
+    private actions$: Actions,
+    private localStorage: LocalStorageService,
+    private store: Store<fromStore.State>
+  ) {}
 }

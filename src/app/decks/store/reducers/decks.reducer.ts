@@ -50,10 +50,6 @@ export function reducer(
       };
     }
 
-    case fromDeck.UPDATE_DECK: {
-      return adapter.updateOne(action.payload, state);
-    }
-
     case fromDeck.SET_DECK_SUBREDDIT_TYPE: {
       const {id, subredditId, type} = action.payload;
       const deck = state.entities[id];

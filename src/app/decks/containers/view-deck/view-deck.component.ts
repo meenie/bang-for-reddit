@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
@@ -16,25 +16,16 @@ import { Subreddit } from '../../models/subreddit.model';
   styleUrls: ['./view-deck.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class ViewDeckComponent {
+export class ViewDeckComponent implements OnDestroy {
   currentSubredditIds$: Observable<string[]>;
   decks$: Observable<Deck[]>;
   currentDeckId$: Observable<string>;
-  // HACK
-  currentDeckId: string;
   paramsSubscription: Subscription;
-  decksPersistSubscription: Subscription;
 
   constructor(private store: Store<fromStore.State>, private route: ActivatedRoute, private router: Router) {
-    this.paramsSubscription = route.params.pipe(
-      map(params => {
-        this.currentDeckId = params.id;
-        return new fromDeck.ActivateDeck(params.id)
-      })
-    ).subscribe(store);
-    this.decksPersistSubscription = store.select(fromStore.getDecksState).pipe(
-      map(decks => new fromDeck.PersistDeck(decks))
-    ).subscribe(store);
+    this.paramsSubscription = route.params
+      .pipe(map(params => new fromDeck.ActivateDeck(params.id)))
+      .subscribe(store);
 
     this.currentSubredditIds$ = store.select(fromStore.getCurrentDeckSubredditIds);
     this.decks$ = store.select(fromStore.getAllDecks);
@@ -43,7 +34,6 @@ export class ViewDeckComponent {
 
   onAddDeck(deck: Deck) {
     this.store.dispatch(new fromDeck.AddDeck(deck));
-    this.router.navigateByUrl(`/d/${deck.id}`);
   }
 
   onSetType(event: {id: string, subredditId: string, type: string}) {
@@ -56,13 +46,9 @@ export class ViewDeckComponent {
 
   onRemoveDeck(event: string) {
     this.store.dispatch(new fromDeck.RemoveDeck(event));
-    if (this.currentDeckId == event) {
-      this.router.navigateByUrl('/d/default');
-    }
   }
 
   ngOnDestroy() {
     this.paramsSubscription.unsubscribe();
-    this.decksPersistSubscription.unsubscribe();
   }
 }

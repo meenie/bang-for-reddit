@@ -13,4 +13,4 @@ export class Check implements Action {
   readonly type = CHECK;
 }
 
-export type All = Verify | Check;
+export type VersionActions = Verify | Check;

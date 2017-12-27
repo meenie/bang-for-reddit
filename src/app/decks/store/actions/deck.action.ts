@@ -35,12 +35,6 @@ export class ActivateDeck implements Action {
   constructor(public payload: string) {}
 }
 
-export class UpdateDeck implements Action {
-  readonly type = UPDATE_DECK;
-
-  constructor(public payload: { id: string, changes: Deck }) {}
-}
-
 export class SetDeckSubredditType implements Action {
   readonly type = SET_DECK_SUBREDDIT_TYPE;
 
@@ -53,11 +47,9 @@ export class SetDeckSubredditSort implements Action {
   constructor(public payload: { id: string, subredditId: string, sort: string }) {}
 }
 
-export type DeckActions =
-  | AddDeck
+export type DeckActions = AddDeck
   | RemoveDeck
   | PersistDeck
   | ActivateDeck
-  | UpdateDeck
   | SetDeckSubredditType
   | SetDeckSubredditSort;

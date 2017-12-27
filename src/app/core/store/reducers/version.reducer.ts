@@ -1,5 +1,5 @@
 import { environment } from '../../../../environments/environment';
-import * as VersionActions from '../actions/version.action';
+import * as fromVersion from '../actions/version.action';
 
 export interface State {
   version: string;
@@ -11,9 +11,9 @@ export const initialState: State = {
   isValid: true
 }
 
-export function reducer(state = initialState, action: VersionActions.All): State {
+export function reducer(state = initialState, action: fromVersion.VersionActions): State {
   switch (action.type) {
-    case VersionActions.VERIFY:
+    case fromVersion.VERIFY:
       return {
         ...state,
         isValid: action.payload == state.version
