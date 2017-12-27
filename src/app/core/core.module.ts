@@ -1,7 +1,7 @@
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 import { StoreModule } from '@ngrx/store';
@@ -12,7 +12,7 @@ import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 
-import { AppComponent } from './components/app.component'
+import * as fromContainers from './containers';
 import { services, LocalStorageService } from './services';
 import { environment } from '../../environments/environment';
 import { CustomRouterStateSerializer } from './utils/custom-router-state-serializer';
@@ -26,18 +26,20 @@ export function getInitialState() {
   };
 }
 
+export const ROUTES: Routes = [
+  {
+    path: 'd',
+    loadChildren: '../decks/decks.module#DecksModule'
+  },
+  { path: '**', redirectTo: '/d/default' },
+];
+
 @NgModule({
   imports: [
     BrowserAnimationsModule,
     CommonModule,
     HttpClientModule,
-    RouterModule.forRoot([
-      {
-        path: 'd',
-        loadChildren: '../decks/decks.module#DecksModule'
-      },
-      { path: '**', redirectTo: '/d/default' },
-    ]),
+    RouterModule.forRoot(ROUTES),
     StoreModule.forRoot(reducers, {
       metaReducers,
       initialState: getInitialState
@@ -50,7 +52,8 @@ export function getInitialState() {
   providers: [
     { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
   ],
-  declarations: [AppComponent]
+  declarations: [fromContainers.components],
+  exports: [fromContainers.components]
 })
 export class CoreModule {
   static forRoot() {

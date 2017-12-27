@@ -5,12 +5,12 @@ import { Subscription } from 'rxjs/Subscription';
 import { timer } from 'rxjs/observable/timer';
 import { map, withLatestFrom } from 'rxjs/operators'
 
-import * as fromCore from '../store';
-import * as VersionActions from '../store/actions/version.action';
-import { environment } from '../../../environments/environment';
+import * as fromCore from '../../store';
+import * as VersionActions from '../../store/actions/version.action';
+import { environment } from '../../../../environments/environment';
 
 @Component({
-  selector: 'app-root',
+  selector: 'bfr-app-root',
   template: `<router-outlet></router-outlet>`
 })
 export class AppComponent implements OnInit {
@@ -18,11 +18,11 @@ export class AppComponent implements OnInit {
 
   constructor(
     angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
-    private _store: Store<fromCore.State>
+    private store: Store<fromCore.State>
   ) {}
 
   ngOnInit() {
-    const isValid$ = this._store.select(fromCore.getIsVersionValid);
+    const isValid$ = this.store.select(fromCore.getIsVersionValid);
 
     isValid$.subscribe(isValid => {
       if (! isValid) {
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
         map(([_, isValid]) => {
           return isValid ? new VersionActions.Check() : undefined;
         })
-      ).subscribe(this._store);
+      ).subscribe(this.store);
     }
   }
 }

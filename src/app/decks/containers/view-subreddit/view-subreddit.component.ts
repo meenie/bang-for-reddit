@@ -39,7 +39,7 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
   subreddit$: Observable<Subreddit>;
   settings$: Observable<{ type: string; sort: string; }>;
 
-  constructor(private _store: Store<fromStore.State>) {}
+  constructor(private store: Store<fromStore.State>) {}
 
   onSetType(event: {id: string, type: string}) {
     this.setType.emit({
@@ -58,8 +58,8 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this._store.dispatch(new fromSubreddit.InitializeSubreddit(this.subredditId))
-    this.subredditRefresher$ = this._store.select(fromStore.getSubredditSettings(this.subredditId)).pipe(
+    this.store.dispatch(new fromSubreddit.InitializeSubreddit(this.subredditId))
+    this.subredditRefresher$ = this.store.select(fromStore.getSubredditSettings(this.subredditId)).pipe(
       distinctUntilChanged(),
       switchMap(settings => timer(0, 5000)
         .pipe(
@@ -67,11 +67,11 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
         )
       )
     )
-    .subscribe(this._store)
+    .subscribe(this.store)
 
-    this.subreddit$ = this._store.select(fromStore.getSubreddit(this.subredditId));
-    this.settings$ = this._store.select(fromStore.getSubredditSettings(this.subredditId));
-    this.posts$ = this._store.select(fromStore.getSubredditPosts(this.subredditId)).pipe(
+    this.subreddit$ = this.store.select(fromStore.getSubreddit(this.subredditId));
+    this.settings$ = this.store.select(fromStore.getSubredditSettings(this.subredditId));
+    this.posts$ = this.store.select(fromStore.getSubredditPosts(this.subredditId)).pipe(
       withLatestFrom(this.settings$),
       map(([posts, settings]) => {
         if (settings.type == 'new') {

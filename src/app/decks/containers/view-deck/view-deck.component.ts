@@ -25,37 +25,37 @@ export class ViewDeckComponent {
   paramsSubscription: Subscription;
   decksPersistSubscription: Subscription;
 
-  constructor(private _store: Store<fromStore.State>, private route: ActivatedRoute, private router: Router) {
+  constructor(private store: Store<fromStore.State>, private route: ActivatedRoute, private router: Router) {
     this.paramsSubscription = route.params.pipe(
       map(params => {
         this.currentDeckId = params.id;
         return new fromDeck.ActivateDeck(params.id)
       })
-    ).subscribe(_store);
-    this.decksPersistSubscription = _store.select(fromStore.getDecksState).pipe(
+    ).subscribe(store);
+    this.decksPersistSubscription = store.select(fromStore.getDecksState).pipe(
       map(decks => new fromDeck.PersistDeck(decks))
-    ).subscribe(_store);
+    ).subscribe(store);
 
-    this.currentSubredditIds$ = _store.select(fromStore.getCurrentDeckSubredditIds);
-    this.decks$ = _store.select(fromStore.getAllDecks);
-    this.currentDeckId$ = _store.select(fromStore.getCurrentDeckId);
+    this.currentSubredditIds$ = store.select(fromStore.getCurrentDeckSubredditIds);
+    this.decks$ = store.select(fromStore.getAllDecks);
+    this.currentDeckId$ = store.select(fromStore.getCurrentDeckId);
   }
 
   onAddDeck(deck: Deck) {
-    this._store.dispatch(new fromDeck.AddDeck(deck));
+    this.store.dispatch(new fromDeck.AddDeck(deck));
     this.router.navigateByUrl(`/d/${deck.id}`);
   }
 
   onSetType(event: {id: string, subredditId: string, type: string}) {
-    this._store.dispatch(new fromDeck.SetDeckSubredditType(event));
+    this.store.dispatch(new fromDeck.SetDeckSubredditType(event));
   }
 
   onSetSort(event: {id: string, subredditId: string, sort: string}) {
-    this._store.dispatch(new fromDeck.SetDeckSubredditSort(event));
+    this.store.dispatch(new fromDeck.SetDeckSubredditSort(event));
   }
 
   onRemoveDeck(event: string) {
-    this._store.dispatch(new fromDeck.RemoveDeck(event));
+    this.store.dispatch(new fromDeck.RemoveDeck(event));
     if (this.currentDeckId == event) {
       this.router.navigateByUrl('/d/default');
     }
