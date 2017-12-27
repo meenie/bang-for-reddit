@@ -35,23 +35,27 @@ export class NavBarComponent {
   public deckName: string;
   public deckSubreddits: string;
   public navbarCollapsed: boolean = true;
-  private isNavbarCollapsedAnim = 'closed';
+  private _isNavbarCollapsedAnim = 'closed';
 
   toggleNavbar(): void {
     if(this.navbarCollapsed){
-      this.isNavbarCollapsedAnim = 'open';
+      this._isNavbarCollapsedAnim = 'open';
       this.navbarCollapsed = false;
     } else {
-      this.isNavbarCollapsedAnim = 'closed';
+      this._isNavbarCollapsedAnim = 'closed';
       this.navbarCollapsed = true;
     }
   }
 
   closeNavbar(): void {
     if (! this.navbarCollapsed) {
-      this.isNavbarCollapsedAnim = 'closed';
+      this._isNavbarCollapsedAnim = 'closed';
       this.navbarCollapsed = true;
     }
+  }
+
+  get isNavbarCollapsedAnim() {
+    return this._isNavbarCollapsedAnim;
   }
 
   onSubmit(form: FormGroup) {
