@@ -13,23 +13,17 @@ import * as fromRouter from '../../../core/store/actions/router.action';
 
 @Injectable()
 export class DeckEffects {
-
   @Effect({ dispatch: false })
   persistDecks$ = this.actions$
-    .ofType<fromDeck.AddDeck
-      | fromDeck.RemoveDeck
-      | fromDeck.SetDeckSubredditSort
-      | fromDeck.SetDeckSubredditType
-    >(
-      fromDeck.ADD_DECK,
-      fromDeck.REMOVE_DECK,
-      fromDeck.SET_DECK_SUBREDDIT_SORT,
-      fromDeck.SET_DECK_SUBREDDIT_TYPE
-    )
+    .ofType<
+      fromDeck.AddDeck | fromDeck.RemoveDeck | fromDeck.SetDeckSubredditType
+    >(fromDeck.ADD_DECK, fromDeck.REMOVE_DECK, fromDeck.SET_DECK_SUBREDDIT_TYPE)
     .pipe(
       withLatestFrom(this.store.select(fromDeckSelectors.getDecksState)),
-      tap(([_, decksState]) => this.localStorage.setItem(fromDeck.DECKS_KEY, decksState))
-    )
+      tap(([_, decksState]) =>
+        this.localStorage.setItem(fromDeck.DECKS_KEY, decksState)
+      )
+    );
 
   @Effect()
   removeDeckRedirect$: Observable<Action> = this.actions$
@@ -38,15 +32,18 @@ export class DeckEffects {
       map(action => action.payload),
       withLatestFrom(this.store.select(fromDeckSelectors.getCurrentDeckId)),
       filter(([deckId, currentDeckId]) => deckId === currentDeckId),
-      map(([deckId, currentDeckId]) => new fromRouter.Go({path: ['/d', 'default']}))
-    )
+      map(
+        ([deckId, currentDeckId]) =>
+          new fromRouter.Go({ path: ['/d', 'default'] })
+      )
+    );
 
   @Effect()
   addDeckRedirect$: Observable<Action> = this.actions$
     .ofType<fromDeck.AddDeck>(fromDeck.ADD_DECK)
     .pipe(
-      map(action => new fromRouter.Go({path: ['/d', action.payload.id]}))
-    )
+      map(action => new fromRouter.Go({ path: ['/d', action.payload.id] }))
+    );
 
   constructor(
     private actions$: Actions,

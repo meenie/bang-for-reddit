@@ -1,4 +1,4 @@
-import { Action } from '@ngrx/store'
+import { Action } from '@ngrx/store';
 import { Deck } from '../../models/deck.model';
 import * as fromDeck from '../reducers/decks.reducer';
 
@@ -9,7 +9,6 @@ export const PERSIST_DECK = '[Deck] Persist';
 export const ACTIVATE_DECK = '[Deck] Activate';
 export const UPDATE_DECK = '[Deck] Update';
 export const SET_DECK_SUBREDDIT_TYPE = '[Deck] Set Subreddit Type';
-export const SET_DECK_SUBREDDIT_SORT = '[Deck] Set Subreddit Sort';
 
 export class AddDeck implements Action {
   readonly type = ADD_DECK;
@@ -38,18 +37,14 @@ export class ActivateDeck implements Action {
 export class SetDeckSubredditType implements Action {
   readonly type = SET_DECK_SUBREDDIT_TYPE;
 
-  constructor(public payload: { id: string, subredditId: string, type: string }) {}
+  constructor(
+    public payload: { id: string; subredditId: string; type: string }
+  ) {}
 }
 
-export class SetDeckSubredditSort implements Action {
-  readonly type = SET_DECK_SUBREDDIT_SORT;
-
-  constructor(public payload: { id: string, subredditId: string, sort: string }) {}
-}
-
-export type DeckActions = AddDeck
+export type DeckActions =
+  | AddDeck
   | RemoveDeck
   | PersistDeck
   | ActivateDeck
-  | SetDeckSubredditType
-  | SetDeckSubredditSort;
+  | SetDeckSubredditType;

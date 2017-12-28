@@ -1,6 +1,6 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
 
 .subreddit-container {
   overflow-y: scroll;
@@ -12,7 +12,7 @@
 }
 /* Add a thumb */
 .subreddit-container::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.226);
+  background: rgba(0, 0, 0, 0.226);
 }
 
 .subreddit-container {

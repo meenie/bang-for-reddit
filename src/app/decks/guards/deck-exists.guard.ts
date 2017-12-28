@@ -6,7 +6,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { tap, map, filter, take, switchMap } from 'rxjs/operators';
 import * as fromStore from '../store';
-import * as fromCoreStore from '../../core/store'
+import * as fromCoreStore from '../../core/store';
 
 import { Deck } from '../models/deck.model';
 
@@ -21,24 +21,24 @@ export class DeckExistsGuard implements CanActivate {
   }
 
   hasDeck(id: string): Observable<boolean> {
-    return this.store
-      .select(fromStore.getDeckEntities)
-      .pipe(
-        map((entities: { [key: string]: Deck }) => !!entities[id]),
-        tap(deckExists => {
-          if (! deckExists) {
-            this.store.dispatch(new fromCoreStore.Go({path: ['/d', 'default']}));
-          }
-        }),
-        take(1)
-      );
+    return this.store.select(fromStore.getDeckEntities).pipe(
+      map((entities: { [key: string]: Deck }) => !!entities[id]),
+      tap(deckExists => {
+        if (!deckExists) {
+          this.store.dispatch(
+            new fromCoreStore.Go({ path: ['/d', 'default'] })
+          );
+        }
+      }),
+      take(1)
+    );
   }
 
   checkStore(id: string): Observable<boolean> {
     return this.store.select(fromStore.getCurrentDeckId).pipe(
       map(currentId => currentId === id),
       tap(loaded => {
-        if (! loaded) {
+        if (!loaded) {
           this.store.dispatch(new fromStore.ActivateDeck(id));
         }
       }),

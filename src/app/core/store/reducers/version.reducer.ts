@@ -9,15 +9,18 @@ export interface State {
 export const initialState: State = {
   version: environment.version,
   isValid: true
-}
+};
 
-export function reducer(state = initialState, action: fromVersion.VersionActions): State {
+export function reducer(
+  state = initialState,
+  action: fromVersion.VersionActions
+): State {
   switch (action.type) {
     case fromVersion.VERIFY:
       return {
         ...state,
         isValid: action.payload == state.version
-      }
+      };
 
     default:
       return state;

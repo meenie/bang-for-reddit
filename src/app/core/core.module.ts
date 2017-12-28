@@ -7,7 +7,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreRouterConnectingModule, RouterStateSerializer } from '@ngrx/router-store';
+import {
+  StoreRouterConnectingModule,
+  RouterStateSerializer
+} from '@ngrx/router-store';
 
 import { Angulartics2Module } from 'angulartics2';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
@@ -31,7 +34,7 @@ export const ROUTES: Routes = [
     path: 'd',
     loadChildren: '../decks/decks.module#DecksModule'
   },
-  { path: '**', redirectTo: '/d/default' },
+  { path: '**', redirectTo: '/d/default' }
 ];
 
 @NgModule({
@@ -50,7 +53,7 @@ export const ROUTES: Routes = [
     Angulartics2Module.forRoot([Angulartics2GoogleAnalytics])
   ],
   providers: [
-    { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer },
+    { provide: RouterStateSerializer, useClass: CustomRouterStateSerializer }
   ],
   declarations: [fromContainers.components],
   exports: [fromContainers.components]
@@ -60,6 +63,6 @@ export class CoreModule {
     return {
       ngModule: CoreModule,
       providers: services
-    }
+    };
   }
 }

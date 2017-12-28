@@ -17,7 +17,7 @@ export function reducer(
       // TODO: Use upsertMany when the method becomes available
       action.payload.posts.forEach(post => {
         state = adapter.addOne(post, state);
-        state = adapter.updateOne({id: post.id, changes: post}, state);
+        state = adapter.updateOne({ id: post.id, changes: post }, state);
       });
 
       return state;

@@ -4,8 +4,7 @@ export interface Deck {
   subredditIds: string[];
   subredditSettings: {
     [id: string]: {
-      type: string,
-      sort: string
-    }
-  }
+      type: string;
+    };
+  };
 }

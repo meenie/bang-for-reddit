@@ -1,6 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 @Pipe({
-	name:'abbrevNumber'
+  name: 'abbrevNumber'
 })
 export class AbbrevNumberPipe implements PipeTransform {
   transform(number: number) {
@@ -13,7 +13,7 @@ export class AbbrevNumberPipe implements PipeTransform {
         return `${Math.round(abbrevedNumber)}k`;
       }
 
-      return `${abbrevedNumber}k`
+      return `${abbrevedNumber}k`;
     }
 
     return number;

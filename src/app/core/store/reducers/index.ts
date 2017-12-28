@@ -3,7 +3,7 @@ import {
   createSelector,
   createFeatureSelector,
   ActionReducer,
-  MetaReducer,
+  MetaReducer
 } from '@ngrx/store';
 import { environment } from '../../../../environments/environment';
 import { RouterStateUrl } from '../../utils/custom-router-state-serializer';
@@ -48,6 +48,8 @@ export const reducers: ActionReducerMap<State> = {
 
 export const initialState = {
   version: fromVersion.initialState
-}
+};
 
-export const getVersionState = createFeatureSelector<fromVersion.State>('version');
+export const getVersionState = createFeatureSelector<fromVersion.State>(
+  'version'
+);

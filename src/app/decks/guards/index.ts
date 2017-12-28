@@ -1,4 +1,4 @@
-import {DeckExistsGuard} from './deck-exists.guard';
+import { DeckExistsGuard } from './deck-exists.guard';
 
 export const guards: any[] = [DeckExistsGuard];
 

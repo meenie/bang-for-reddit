@@ -1,6 +1,17 @@
-import { Component, Input, ChangeDetectionStrategy, Output } from '@angular/core';
+import {
+  Component,
+  Input,
+  ChangeDetectionStrategy,
+  Output
+} from '@angular/core';
 import { EventEmitter } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate
+} from '@angular/animations';
 import * as uuidv4 from 'uuid/v4';
 
 import { Deck } from '../../models/deck.model';
@@ -13,15 +24,21 @@ import { FormGroup } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush,
   animations: [
     trigger('collapse', [
-      state('open', style({
-        overflow: 'hidden',
-        maxHeight: '300px',
-      })),
-      state('closed',   style({
-        opacity: '0',
-        overflow: 'hidden',
-        maxHeight: '0'
-      })),
+      state(
+        'open',
+        style({
+          overflow: 'hidden',
+          maxHeight: '300px'
+        })
+      ),
+      state(
+        'closed',
+        style({
+          opacity: '0',
+          overflow: 'hidden',
+          maxHeight: '0'
+        })
+      ),
       transition('closed => open', animate('200ms ease-in-out')),
       transition('open => closed', animate('200ms ease-in-out'))
     ])
@@ -38,7 +55,7 @@ export class NavBarComponent {
   private _isNavbarCollapsedAnim = 'closed';
 
   toggleNavbar(): void {
-    if(this.navbarCollapsed){
+    if (this.navbarCollapsed) {
       this._isNavbarCollapsedAnim = 'open';
       this.navbarCollapsed = false;
     } else {
@@ -48,7 +65,7 @@ export class NavBarComponent {
   }
 
   closeNavbar(): void {
-    if (! this.navbarCollapsed) {
+    if (!this.navbarCollapsed) {
       this._isNavbarCollapsedAnim = 'closed';
       this.navbarCollapsed = true;
     }
@@ -59,15 +76,14 @@ export class NavBarComponent {
   }
 
   onSubmit(form: FormGroup) {
-    const subredditIds = this.deckSubreddits.split(',').map(sr => sr.trim())
+    const subredditIds = this.deckSubreddits.split(',').map(sr => sr.trim());
     const settings: any = subredditIds.reduce((acc, id) => {
       acc[id] = {
-        type: 'rising',
-        sort: 'score'
+        type: 'rising'
       };
 
       return acc;
-    }, {})
+    }, {});
     const deck = {
       id: uuidv4(),
       name: this.deckName,

@@ -1,12 +1,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
   <a class="navbar-brand" routerLink="/">Bang!</a>
-  <button class="navbar-toggler"
-          type="button"
-          (click)="toggleNavbar()"
-          [attr.aria-expanded]="!navbarCollapsed"
-          aria-controls="navbarContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" (click)="toggleNavbar()" [attr.aria-expanded]="!navbarCollapsed" aria-controls="navbarContent"
+    aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div class="navbar-collapse" [@collapse]="isNavbarCollapsedAnim">
@@ -21,11 +16,10 @@
         </small>
       </li>
     </ul>
-    <form #newDeckForm="ngForm"
-          class="form-inline my-2 my-lg-0"
-          (ngSubmit)="onSubmit(newDeckForm)">
+    <form #newDeckForm="ngForm" class="form-inline my-2 my-lg-0" (ngSubmit)="onSubmit(newDeckForm)">
       <input class="form-control mr-sm-2" placeholder="Deck Name" [(ngModel)]="deckName" name="deckName" type="text">
-      <input class="form-control mr-sm-2" placeholder="Subreddits (comma delimited)" [(ngModel)]="deckSubreddits" name="deckSubreddits" type="text">
+      <input class="form-control mr-sm-2" placeholder="Subreddits (comma delimited)" [(ngModel)]="deckSubreddits" name="deckSubreddits"
+        type="text">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add</button>
     </form>
   </div>

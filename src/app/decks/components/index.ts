@@ -5,7 +5,7 @@ import { PostDetailComponent } from './post-detail/post-detail.component';
 export const components: any[] = [
   NavBarComponent,
   SubredditDetailComponent,
-  PostDetailComponent,
+  PostDetailComponent
 ];
 
 export * from './nav-bar/nav-bar.component';

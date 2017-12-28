@@ -18,12 +18,10 @@ export const initialState: State = adapter.getInitialState({
       subredditIds: ['all', 'politics'],
       subredditSettings: {
         all: {
-          type: 'top',
-          sort: 'score'
+          type: 'top'
         },
         politics: {
-          type: 'rising',
-          sort: 'score'
+          type: 'rising'
         }
       }
     }
@@ -46,36 +44,21 @@ export function reducer(
     case fromDeck.ACTIVATE_DECK: {
       return {
         ...state,
-        selectedDeckId: action.payload,
+        selectedDeckId: action.payload
       };
     }
 
     case fromDeck.SET_DECK_SUBREDDIT_TYPE: {
-      const {id, subredditId, type} = action.payload;
+      const { id, subredditId, type } = action.payload;
       const deck = state.entities[id];
-      const subredditSettings = { ...deck.subredditSettings};
-      const settings = {...subredditSettings[subredditId], type};
+      const subredditSettings = { ...deck.subredditSettings };
+      const settings = { ...subredditSettings[subredditId], type };
       subredditSettings[subredditId] = settings;
 
       const update = {
         id,
-        changes: {...deck, subredditSettings}
-      }
-
-      return adapter.updateOne(update, state);
-    }
-
-    case fromDeck.SET_DECK_SUBREDDIT_SORT: {
-      const {id, subredditId, sort} = action.payload;
-      const deck = state.entities[id];
-      const subredditSettings = { ...deck.subredditSettings};
-      const settings = {...subredditSettings[subredditId], sort};
-      subredditSettings[subredditId] = settings;
-
-      const update = {
-        id,
-        changes: {...deck, subredditSettings}
-      }
+        changes: { ...deck, subredditSettings }
+      };
 
       return adapter.updateOne(update, state);
     }

@@ -41,10 +41,6 @@ export class ViewDeckComponent {
     this.store.dispatch(new fromDeck.SetDeckSubredditType(event));
   }
 
-  onSetSort(event: { id: string; subredditId: string; sort: string }) {
-    this.store.dispatch(new fromDeck.SetDeckSubredditSort(event));
-  }
-
   onRemoveDeck(event: string) {
     this.store.dispatch(new fromDeck.RemoveDeck(event));
   }

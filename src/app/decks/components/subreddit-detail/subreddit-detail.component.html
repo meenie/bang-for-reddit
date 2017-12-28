@@ -10,13 +10,9 @@
 <h4 *ngIf="! subreddit.loaded && subreddit.loading" class="text-center text-muted mt-5">Loading...</h4>
 <h4 *ngIf="posts.length == 0 && subreddit.loaded" class="text-center text-muted mt-5">Nothin' Bang'n</h4>
 <div *ngIf="subreddit.loaded" class="list-group m-3">
-  <bfr-post-detail
-      *ngFor="let post of posts; trackBy: trackById"
-      class="list-group-item d-flex"
-      [ngClass]="{
+  <bfr-post-detail *ngFor="let post of posts; trackBy: trackById" class="list-group-item d-flex" [ngClass]="{
         'list-group-item-warning': settings.type == 'rising' && post.score >= 100 && post.score < 200,
         'list-group-item-danger': settings.type == 'rising' && post.score >= 200
-      }"
-      [post]="post">
+      }" [post]="post">
   </bfr-post-detail>
 </div>

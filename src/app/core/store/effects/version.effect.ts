@@ -13,10 +13,12 @@ export class VersionEffects {
   versionChecker$: Observable<Action> = this.actions$
     .ofType<VersionActions.Check>(VersionActions.CHECK)
     .pipe(
-      switchMap(() => this.version.serverVersion().pipe(
-        map(version => new VersionActions.Verify(version.version))
-      ))
-    )
+      switchMap(() =>
+        this.version
+          .serverVersion()
+          .pipe(map(version => new VersionActions.Verify(version.version)))
+      )
+    );
 
   constructor(private actions$: Actions, private version: VersionService) {}
 }
