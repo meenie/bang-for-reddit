@@ -59,25 +59,6 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subredditRefresher$ = this.store
-      .select(fromStore.getCurrentDeckSubredditSettings)
-      .pipe(
-        map(settings => settings[this.subredditId]),
-        distinctUntilChanged(),
-        switchMap(settings =>
-          timer(0, environment.production ? 5000 : 60000).pipe(
-            map(
-              () =>
-                new fromSubreddit.LoadSubredditPosts({
-                  id: this.subredditId,
-                  type: settings.type
-                })
-            )
-          )
-        )
-      )
-      .subscribe(this.store);
-
     this.subreddit$ = this.store
       .select(fromStore.getSubredditEntities)
       .pipe(map(subreddits => subreddits[this.subredditId]));
@@ -107,6 +88,23 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
         return posts;
       })
     );
+
+    this.subredditRefresher$ = this.settings$
+      .pipe(
+        distinctUntilChanged(),
+        switchMap(settings =>
+          timer(0, environment.production ? 5000 : 60000).pipe(
+            map(
+              () =>
+                new fromSubreddit.LoadSubredditPosts({
+                  id: this.subredditId,
+                  type: settings.type
+                })
+            )
+          )
+        )
+      )
+      .subscribe(this.store);
   }
 
   ngOnDestroy() {
