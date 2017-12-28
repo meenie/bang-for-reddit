@@ -67,8 +67,7 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
               () =>
                 new fromSubreddit.LoadSubredditPosts({
                   id: this.subredditId,
-                  type: settings.type,
-                  sort: settings.sort
+                  type: settings.type
                 })
             )
           )
