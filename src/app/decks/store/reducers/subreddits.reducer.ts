@@ -16,17 +16,21 @@ export function reducer(
   action: fromSubreddit.SubredditActions | fromDeck.DeckActions
 ): State {
   switch (action.type) {
-    case fromSubreddit.INITIALIZE_SUBREDDIT: {
-      const data = {
-        id: action.payload,
-        loading: true,
-        loaded: false,
-        postIds: []
-      };
+    case fromSubreddit.INITIALIZE_SUBREDDITS: {
+      action.payload.forEach(id => {
+        const data = {
+          id,
+          loading: true,
+          loaded: false,
+          postIds: []
+        };
 
-      // TODO: Use upsertMany when the method becomes available
-      state = adapter.addOne(data, state);
-      return adapter.updateOne({ id: data.id, changes: data }, state);
+        // TODO: Use upsertMany when the method becomes available
+        state = adapter.addOne(data, state);
+        state = adapter.updateOne({ id: data.id, changes: data }, state);
+      });
+
+      return state;
     }
 
     case fromSubreddit.LOAD_SUBREDDIT_POSTS: {

@@ -37,9 +37,3 @@ export const getCurrentDeckSubredditSettings = createSelector(
     return deck ? deck.subredditSettings : {};
   }
 );
-
-export const getSubredditSettings = (id: string) =>
-  createSelector(
-    getCurrentDeckSubredditSettings,
-    subredditSettings => subredditSettings[id]
-  );

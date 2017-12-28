@@ -15,34 +15,21 @@ export class DeckExistsGuard implements CanActivate {
   constructor(private store: Store<fromStore.State>) {}
 
   canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
-    return this.checkStore(route.params.id).pipe(
-      switchMap(() => this.hasDeck(route.params.id))
-    );
+    return this.checkStore(route.params.id);
   }
 
-  hasDeck(id: string): Observable<boolean> {
+  checkStore(id: string): Observable<boolean> {
     return this.store.select(fromStore.getDeckEntities).pipe(
-      map((entities: { [key: string]: Deck }) => !!entities[id]),
-      tap(deckExists => {
-        if (!deckExists) {
+      map(allDecks => !!allDecks[id]),
+      tap(exists => {
+        if (exists) {
+          this.store.dispatch(new fromStore.ActivateDeck(id));
+        } else {
           this.store.dispatch(
             new fromCoreStore.Go({ path: ['/d', 'default'] })
           );
         }
       }),
-      take(1)
-    );
-  }
-
-  checkStore(id: string): Observable<boolean> {
-    return this.store.select(fromStore.getCurrentDeckId).pipe(
-      map(currentId => currentId === id),
-      tap(loaded => {
-        if (!loaded) {
-          this.store.dispatch(new fromStore.ActivateDeck(id));
-        }
-      }),
-      filter(loaded => loaded),
       take(1)
     );
   }

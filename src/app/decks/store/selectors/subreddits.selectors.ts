@@ -15,17 +15,3 @@ export const {
   selectAll: getAllSubreddits,
   selectTotal: getTotalSubreddits
 } = fromSubreddits.adapter.getSelectors(getSubredditsState);
-
-export const getSubreddit = (id: string) =>
-  createSelector(
-    getSubredditEntities,
-    subredditEntities => subredditEntities[id]
-  );
-
-export const getSubredditPosts = (id: string) =>
-  createSelector(
-    getSubredditEntities,
-    fromPosts.getAllPosts,
-    (subredditEntities, allPosts) =>
-      allPosts.filter(post => subredditEntities[id].postIds.includes(post.id))
-  );

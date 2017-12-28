@@ -15,13 +15,18 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
 import { timer } from 'rxjs/observable/timer';
 
-import { map, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import {
+  map,
+  distinctUntilChanged,
+  switchMap,
+  withLatestFrom
+} from 'rxjs/operators';
 
 import * as fromStore from '../../store';
 import * as fromSubreddit from '../../store/actions/subreddit.action';
 import { Subreddit } from '../../models/subreddit.model';
 import { Post } from '../../models/post.model';
-import { withLatestFrom } from 'rxjs/operators/withLatestFrom';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'bfr-view-subreddit',
@@ -54,15 +59,13 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.store.dispatch(
-      new fromSubreddit.InitializeSubreddit(this.subredditId)
-    );
     this.subredditRefresher$ = this.store
-      .select(fromStore.getSubredditSettings(this.subredditId))
+      .select(fromStore.getCurrentDeckSubredditSettings)
       .pipe(
+        map(settings => settings[this.subredditId]),
         distinctUntilChanged(),
         switchMap(settings =>
-          timer(0, 5000).pipe(
+          timer(0, environment.production ? 5000 : 60000).pipe(
             map(
               () =>
                 new fromSubreddit.LoadSubredditPosts({
@@ -75,30 +78,35 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
       )
       .subscribe(this.store);
 
-    this.subreddit$ = this.store.select(
-      fromStore.getSubreddit(this.subredditId)
-    );
-    this.settings$ = this.store.select(
-      fromStore.getSubredditSettings(this.subredditId)
-    );
-    this.posts$ = this.store
-      .select(fromStore.getSubredditPosts(this.subredditId))
+    this.subreddit$ = this.store
+      .select(fromStore.getSubredditEntities)
+      .pipe(map(subreddits => subreddits[this.subredditId]));
+    this.settings$ = this.store
+      .select(fromStore.getCurrentDeckSubredditSettings)
       .pipe(
-        withLatestFrom(this.settings$),
-        map(([posts, settings]) => {
-          if (settings.type == 'new') {
-            posts = posts.sort(
-              (a, b) => b.created.getTime() - a.created.getTime()
-            );
-          }
-
-          if (settings.type == 'rising') {
-            posts = posts.sort((a, b) => b.score - a.score);
-          }
-
-          return posts;
-        })
+        withLatestFrom(this.subreddit$),
+        map(([settings, subreddit]) => settings[subreddit.id])
       );
+    this.posts$ = this.store.select(fromStore.getAllPosts).pipe(
+      withLatestFrom(this.subreddit$),
+      map(([allPosts, subreddit]) =>
+        allPosts.filter(post => subreddit.postIds.includes(post.id))
+      ),
+      withLatestFrom(this.settings$),
+      map(([posts, settings]) => {
+        if (settings.type == 'new') {
+          posts = posts.sort(
+            (a, b) => b.created.getTime() - a.created.getTime()
+          );
+        }
+
+        if (settings.type == 'rising') {
+          posts = posts.sort((a, b) => b.score - a.score);
+        }
+
+        return posts;
+      })
+    );
   }
 
   ngOnDestroy() {

@@ -1,14 +1,14 @@
 import { Action } from '@ngrx/store';
 import { Post } from '../../models/post.model';
 
-export const INITIALIZE_SUBREDDIT = '[Subreddit] Initialize';
+export const INITIALIZE_SUBREDDITS = '[Subreddit] Initialize Subreddits';
 export const LOAD_SUBREDDIT_POSTS = '[Subreddit] Load Posts';
 export const LOAD_SUBREDDIT_POSTS_SUCCESS = '[Subreddit] Load Posts Success';
 
-export class InitializeSubreddit implements Action {
-  readonly type = INITIALIZE_SUBREDDIT;
+export class InitializeSubreddits implements Action {
+  readonly type = INITIALIZE_SUBREDDITS;
 
-  constructor(public payload: string) {}
+  constructor(public payload: string[]) {}
 }
 
 export class LoadSubredditPosts implements Action {
@@ -24,6 +24,6 @@ export class LoadSubredditPostsSuccess implements Action {
 }
 
 export type SubredditActions =
-  | InitializeSubreddit
+  | InitializeSubreddits
   | LoadSubredditPosts
   | LoadSubredditPostsSuccess;
