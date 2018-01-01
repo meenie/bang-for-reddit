@@ -16,12 +16,12 @@ export const {
 
 export const getCurrentDeckId = createSelector(
   getDecksState,
-  state => state.selectedDeckId
+  state => state.currentDeckId
 );
 export const getCurrentDeck = createSelector(
   getDeckEntities,
   getDecksState,
-  (deckEntities, deckState) => deckEntities[deckState.selectedDeckId]
+  (deckEntities, deckState) => deckEntities[deckState.currentDeckId]
 );
 
 export const getCurrentDeckSubredditIds = createSelector(

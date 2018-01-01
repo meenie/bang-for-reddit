@@ -1,7 +1,7 @@
 <bfr-nav-bar [decks]="decks$ | async" (addDeck)=onAddDeck($event) (removeDeck)="onRemoveDeck($event)"></bfr-nav-bar>
 <div class="h-100 d-flex">
-  <bfr-view-subreddit class="subreddit-container mb-5 pb-4 mt-5 pt-4 w-100" *ngFor="let subredditId of currentSubredditIds$ | async"
-    [subredditId]="subredditId" [deckId]="currentDeckId$ | async" (setType)="onSetType($event)">
+  <bfr-view-subreddit class="subreddit-container pb-4 mt-5 pt-4 w-100" *ngFor="let subredditId of currentSubredditIds$ | async"
+    [subredditId]="subredditId">
   </bfr-view-subreddit>
 </div>
 <div class="fixed-bottom bg-light">

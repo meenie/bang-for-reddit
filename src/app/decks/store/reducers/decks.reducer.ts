@@ -3,13 +3,13 @@ import { Deck } from '../../models/deck.model';
 import * as fromDeck from '../actions/deck.action';
 
 export interface State extends EntityState<Deck> {
-  selectedDeckId: string | null;
+  currentDeckId: string | null;
 }
 
 export const adapter: EntityAdapter<Deck> = createEntityAdapter<Deck>();
 
 export const initialState: State = adapter.getInitialState({
-  selectedDeckId: null,
+  currentDeckId: null,
   ids: ['default'],
   entities: {
     default: {
@@ -44,12 +44,13 @@ export function reducer(
     case fromDeck.ACTIVATE_DECK: {
       return {
         ...state,
-        selectedDeckId: action.payload
+        currentDeckId: action.payload
       };
     }
 
     case fromDeck.SET_DECK_SUBREDDIT_TYPE: {
-      const { id, subredditId, type } = action.payload;
+      const id = state.currentDeckId;
+      const { subredditId, type } = action.payload;
       const deck = state.entities[id];
       const subredditSettings = { ...deck.subredditSettings };
       const settings = { ...subredditSettings[subredditId], type };

@@ -5,6 +5,7 @@ export interface Post {
   commentsUrl: string;
   numComments: number;
   score: number;
+  highlightLevel: string;
   thumbnail: string;
   author: string;
   subreddit: string;

@@ -2,7 +2,6 @@ import {
   Component,
   ChangeDetectionStrategy,
   Input,
-  Output,
   OnInit,
   OnDestroy
 } from '@angular/core';
@@ -24,9 +23,9 @@ import {
 
 import * as fromStore from '../../store';
 import * as fromSubreddit from '../../store/actions/subreddit.action';
+import * as fromDeck from '../../store/actions/deck.action';
 import { Subreddit } from '../../models/subreddit.model';
 import { Post } from '../../models/post.model';
-import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'bfr-view-subreddit',
@@ -35,13 +34,6 @@ import { environment } from '../../../../environments/environment';
 })
 export class ViewSubredditComponent implements OnInit, OnDestroy {
   @Input() subredditId: string;
-  @Input() deckId: string;
-  @Output()
-  setType = new EventEmitter<{
-    id: string;
-    subredditId: string;
-    type: string;
-  }>();
 
   subredditRefresher$: Subscription;
   posts$: Observable<Post[]>;
@@ -50,12 +42,8 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
 
   constructor(private store: Store<fromStore.State>) {}
 
-  onSetType(event: { id: string; type: string }) {
-    this.setType.emit({
-      id: this.deckId,
-      subredditId: event.id,
-      type: event.type
-    });
+  onSetType(event: { subredditId: string; type: string }) {
+    this.store.dispatch(new fromDeck.SetDeckSubredditType(event));
   }
 
   ngOnInit() {
@@ -93,7 +81,7 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
       .pipe(
         distinctUntilChanged(),
         switchMap(settings =>
-          timer(0, environment.production ? 5000 : 60000).pipe(
+          timer(0, 5000).pipe(
             map(
               () =>
                 new fromSubreddit.LoadSubredditPosts({

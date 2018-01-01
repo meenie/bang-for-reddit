@@ -37,9 +37,7 @@ export class ActivateDeck implements Action {
 export class SetDeckSubredditType implements Action {
   readonly type = SET_DECK_SUBREDDIT_TYPE;
 
-  constructor(
-    public payload: { id: string; subredditId: string; type: string }
-  ) {}
+  constructor(public payload: { subredditId: string; type: string }) {}
 }
 
 export type DeckActions =

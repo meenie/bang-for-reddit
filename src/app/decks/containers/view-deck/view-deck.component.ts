@@ -1,14 +1,10 @@
 import { Component, ChangeDetectionStrategy } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs/Observable';
-import { Subscription } from 'rxjs/Subscription';
-import { map } from 'rxjs/operators';
 
 import * as fromStore from '../../store';
 import * as fromDeck from '../../store/actions/deck.action';
 import { Deck } from '../../models/deck.model';
-import { Subreddit } from '../../models/subreddit.model';
 
 @Component({
   selector: 'bfr-view-deck',
@@ -21,11 +17,7 @@ export class ViewDeckComponent {
   decks$: Observable<Deck[]>;
   currentDeckId$: Observable<string>;
 
-  constructor(
-    private store: Store<fromStore.State>,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {
+  constructor(private store: Store<fromStore.State>) {
     this.currentSubredditIds$ = store.select(
       fromStore.getCurrentDeckSubredditIds
     );
@@ -35,10 +27,6 @@ export class ViewDeckComponent {
 
   onAddDeck(deck: Deck) {
     this.store.dispatch(new fromDeck.AddDeck(deck));
-  }
-
-  onSetType(event: { id: string; subredditId: string; type: string }) {
-    this.store.dispatch(new fromDeck.SetDeckSubredditType(event));
   }
 
   onRemoveDeck(event: string) {
