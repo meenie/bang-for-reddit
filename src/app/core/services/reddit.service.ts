@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { of } from 'rxjs/observable/of';
+import { empty } from 'rxjs/observable/empty';
 import { catchError, map } from 'rxjs/operators';
 
 @Injectable()
@@ -19,7 +20,7 @@ export class RedditService {
         }.json?t=${new Date().getTime()}`
       )
       .pipe(
-        catchError(err => of(false)),
+        catchError(err => empty()),
         map((subreddit: any) => {
           if (!subreddit) {
             return [];

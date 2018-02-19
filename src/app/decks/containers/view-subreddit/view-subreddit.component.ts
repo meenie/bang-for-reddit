@@ -18,7 +18,9 @@ import {
   map,
   distinctUntilChanged,
   switchMap,
-  withLatestFrom
+  withLatestFrom,
+  tap,
+  filter
 } from 'rxjs/operators';
 
 import * as fromStore from '../../store';
@@ -26,6 +28,7 @@ import * as fromSubreddit from '../../store/actions/subreddit.action';
 import * as fromDeck from '../../store/actions/deck.action';
 import { Subreddit } from '../../models/subreddit.model';
 import { Post } from '../../models/post.model';
+import { RedditService } from '../../../core/services/reddit.service';
 
 @Component({
   selector: 'bfr-view-subreddit',
@@ -40,7 +43,7 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
   subreddit$: Observable<Subreddit>;
   settings$: Observable<{ type: string }>;
 
-  constructor(private store: Store<fromStore.State>) {}
+  constructor(private store: Store<fromStore.State>, private reddit: RedditService) {}
 
   onSetType(event: { subredditId: string; type: string }) {
     this.store.dispatch(new fromDeck.SetDeckSubredditType(event));
@@ -54,6 +57,7 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
       .select(fromStore.getCurrentDeckSubredditSettings)
       .pipe(
         withLatestFrom(this.subreddit$),
+        filter(([settings, subreddit]) => !! settings[subreddit.id]),
         map(([settings, subreddit]) => settings[subreddit.id])
       );
     this.posts$ = this.store.select(fromStore.getAllPosts).pipe(
@@ -80,14 +84,26 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
     this.subredditRefresher$ = this.settings$
       .pipe(
         distinctUntilChanged(),
+        filter(settings => !! settings),
+        tap(settings => this.store.dispatch(
+          new fromSubreddit.LoadSubredditPosts({id: this.subredditId, type: settings.type})
+        )),
         switchMap(settings =>
           timer(0, 5000).pipe(
-            map(
+            switchMap(
               () =>
-                new fromSubreddit.LoadSubredditPosts({
+                this.reddit.getPosts({
                   id: this.subredditId,
                   type: settings.type
-                })
+                }).pipe(
+                  map(
+                    posts =>
+                      new fromSubreddit.LoadSubredditPostsSuccess({
+                        id: this.subredditId,
+                        posts
+                      })
+                  )
+                )
             )
           )
         )

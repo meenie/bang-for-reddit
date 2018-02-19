@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Effect, Actions } from '@ngrx/effects';
 import { Observable } from 'rxjs/Observable';
-import { concatMap, map } from 'rxjs/operators';
+import { concatMap, switchMap, map } from 'rxjs/operators';
 
 import { RedditService } from '../../../core/services/reddit.service';
 
@@ -24,25 +24,6 @@ export class SubredditEffects {
       map(
         ([_, subredditIds]) =>
           new subredditActions.InitializeSubreddits(subredditIds)
-      )
-    );
-
-  @Effect()
-  loadSubredditPosts$: Observable<Action> = this.actions$
-    .ofType<subredditActions.LoadSubredditPosts>(
-      subredditActions.LOAD_SUBREDDIT_POSTS
-    )
-    .pipe(
-      concatMap(action =>
-        this.reddit.getPosts(action.payload).pipe(
-          map(
-            posts =>
-              new subredditActions.LoadSubredditPostsSuccess({
-                id: action.payload.id,
-                posts
-              })
-          )
-        )
       )
     );
 
