@@ -17,7 +17,7 @@ export class RedditService {
       .get(
         `${this.REDDIT_URL}/r/${id}${
           type ? '/' + type : ''
-        }.json?t=${new Date().getTime()}`
+        }.json`
       )
       .pipe(
         catchError(err => empty()),
