@@ -7,11 +7,15 @@ import { map, withLatestFrom } from 'rxjs/operators';
 
 import * as fromCore from '../../store';
 import * as VersionActions from '../../store/actions/version.action';
+import * as IdleActions from '../../store/actions/idle.action';
 import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'bfr-app-root',
-  template: `<router-outlet></router-outlet>`
+  template: `<router-outlet></router-outlet>`,
+  host: {
+    '(document:visibilitychange)': 'visibilitychange($event)'
+  }
 })
 export class AppComponent implements OnInit {
   private versionChecker$: Subscription;
@@ -40,5 +44,9 @@ export class AppComponent implements OnInit {
         )
         .subscribe(this.store);
     }
+  }
+
+  visibilitychange($event) {
+    this.store.dispatch(new IdleActions.SetIdle(document.hidden));
   }
 }

@@ -13,6 +13,7 @@ import { Store } from '@ngrx/store';
 
 import { Observable } from 'rxjs/Observable';
 import { timer } from 'rxjs/observable/timer';
+import { combineLatest } from 'rxjs/observable/combineLatest';
 
 import {
   map,
@@ -29,6 +30,7 @@ import * as fromDeck from '../../store/actions/deck.action';
 import { Subreddit } from '../../models/subreddit.model';
 import { Post } from '../../models/post.model';
 import { RedditService } from '../../../core/services/reddit.service';
+import * as fromCoreStore from '../../../core/store';
 
 @Component({
   selector: 'bfr-view-subreddit',
@@ -81,15 +83,16 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
       })
     );
 
-    this.subredditRefresher$ = this.settings$
+    this.subredditRefresher$ = combineLatest(this.settings$, this.store.select(fromCoreStore.getIsIdle))
       .pipe(
+        filter(([settings, isIdle]) => !! settings),
         distinctUntilChanged(),
-        filter(settings => !! settings),
-        tap(settings => this.store.dispatch(
+        tap(([settings, isIdle]) => this.store.dispatch(
           new fromSubreddit.LoadSubredditPosts({id: this.subredditId, type: settings.type})
         )),
-        switchMap(settings =>
+        switchMap(([settings, isIdle]) =>
           timer(0, 5000).pipe(
+            filter(() => ! isIdle),
             switchMap(
               () =>
                 this.reddit.getPosts({

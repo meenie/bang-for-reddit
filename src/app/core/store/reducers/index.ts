@@ -17,6 +17,7 @@ import * as fromRouter from '@ngrx/router-store';
 import { storeFreeze } from 'ngrx-store-freeze';
 
 import * as fromVersion from './version.reducer';
+import * as fromIdle from './idle.reducer';
 
 /**
  * By default, @ngrx/store uses combineReducers with the reducer map to compose
@@ -34,6 +35,7 @@ export const metaReducers: MetaReducer<State>[] = !environment.production
 export interface State {
   routerReducer: fromRouter.RouterReducerState<RouterStateUrl>;
   version: fromVersion.State;
+  idle: fromIdle.State;
 }
 
 /**
@@ -43,13 +45,19 @@ export interface State {
  */
 export const reducers: ActionReducerMap<State> = {
   routerReducer: fromRouter.routerReducer,
-  version: fromVersion.reducer
+  version: fromVersion.reducer,
+  idle: fromIdle.reducer
 };
 
 export const initialState = {
-  version: fromVersion.initialState
+  version: fromVersion.initialState,
+  idle: fromIdle.initialState
 };
 
 export const getVersionState = createFeatureSelector<fromVersion.State>(
   'version'
+);
+
+export const getIdleState = createFeatureSelector<fromIdle.State>(
+  'idle'
 );
