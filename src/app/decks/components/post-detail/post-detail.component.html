@@ -1,52 +1,23 @@
-<div class="mr-3 d-lg-none">
-    <a class="font-weight-bold" [title]="post.score">{{ post.score | abbrevNumber }}</a>
-    <small>
-      <a href="https://www.reddit.com/user/{{ post.author }}" target="_blank">{{ post.author }}</a>
-      to
-      <a href="https://www.reddit.com/r/{{ post.subreddit }}" target="_blank">r/{{ post.subreddit }}</a>
-    </small>
-    <br>
-    <a [href]="post.url" target="_blank" [title]="post.title">{{ post.title }}</a>
-    <br>
-    <small>
-      <a [href]="post.commentsUrl" target="_blank">{{ post.numComments }} Comments</a>
-      &middot;
-      <a [href]="post.domainUrl" target="_blank">
-        {{ post.domain }}
-      </a>
-      &middot;
-      <a [title]="post.created.toLocaleString()">{{ post.created | timeAgo }}</a>
-    </small>
-</div>
-<div class="align-self-center ml-auto d-lg-none" *ngIf="post.thumbnail">
-  <img [alt]="post.title" [src]="post.thumbnail" class="rounded" style="width: 100px;">
-</div>
-
-<div class="d-none d-lg-block">
-  <h5 style="width: 75px">
-    <a [title]="post.score">{{ post.score | abbrevNumber }}</a>
-  </h5>
-</div>
-<div class="mr-2 d-none d-lg-block">
-  <img *ngIf="! post.thumbnail" [alt]="post.title" src="/assets/reddit-logo.png" class="rounded" style="width: 100px;">
-  <img *ngIf="post.thumbnail" [alt]="post.title" [src]="post.thumbnail" class="rounded" style="width: 100px;">
-</div>
-<div class="d-none d-lg-block">
-  <h5 class="mb-1 post-title">
-    <a [href]="post.url" target="_blank" [title]="post.title">{{ post.title }}</a>
-    <a class="ml-2" [href]="post.domainUrl" target="_blank">
-      <small>{{ post.domain }}</small>
+<div class="mr-3">
+  <span class="h5 text-muted mr-1" [title]="post.score">{{ post.score | abbrevNumber }}</span>
+  <small class="text-muted">
+    <a class="text-info" href="https://www.reddit.com/user/{{ post.author }}" target="_blank">{{ post.author }}</a>
+    to
+    <a class="text-info" href="https://www.reddit.com/r/{{ post.subreddit }}" target="_blank">r/{{ post.subreddit }}</a>
+  </small>
+  <br>
+  <a class="text-dark h6" [href]="post.url" target="_blank" [title]="post.title">{{ post.title }}</a>
+  <br>
+  <small class="text-muted">
+    <a class="text-secondary" [href]="post.commentsUrl" target="_blank">{{ post.numComments }} Comments</a>
+    &middot;
+    <a class="text-secondary" [href]="post.domainUrl" target="_blank">
+      {{ post.domain }}
     </a>
-  </h5>
-  <p>
-    <a [href]="post.commentsUrl" target="_blank">{{ post.numComments }} Comments</a>
-    <br>
-    <small>
-      <a [title]="post.created.toLocaleString()">Submitted {{ post.created | timeAgo }}</a>
-      by
-      <a href="https://www.reddit.com/user/{{ post.author }}" target="_blank">{{ post.author }}</a>
-      to
-      <a href="https://www.reddit.com/r/{{ post.subreddit }}" target="_blank">r/{{ post.subreddit }}</a>
-    </small>
-  </p>
+    &middot;
+    <span class="text-secondary" [title]="post.created.toLocaleString()">{{ post.created | timeAgo }}</span>
+  </small>
+</div>
+<div class="align-self-center ml-auto" *ngIf="post.thumbnail">
+  <img [alt]="post.title" [src]="post.thumbnail" class="rounded" style="width: 100px;">
 </div>
