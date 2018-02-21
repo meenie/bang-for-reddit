@@ -1,0 +1,10 @@
+{
+  "short_name": "BangForReddit",
+  "name": "Bang! For Reddit",
+  "lang": "en",
+  "description": "Real-time subreddit viewer.",
+  "background_color": "#f7281e",
+  "theme_color": "#f7281e",
+  "start_url": "/d/default",
+  "display": "standalone"
+}

@@ -5,12 +5,12 @@ const sslRedirect = require('heroku-ssl-redirect');
 
 const app = express();
 const port = process.env.PORT || '3456';
-const packageJson = require('./package.json');
 
 app.use(sslRedirect(['production'], 301));
 app.use(express.static(path.join(__dirname, 'dist')));
+// REMOVE AFTER NEXT DEPLOY
 app.get('/version', (req, res) => {
-  res.send(`{"version": "${packageJson.version}"}`);
+  res.send(`{"version": "DEPRECATED"}`);
 });
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));

@@ -158,6 +158,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/service-worker@5.2.5":
+  version "5.2.5"
+  resolved "https://registry.yarnpkg.com/@angular/service-worker/-/service-worker-5.2.5.tgz#5843c4dd50e8408d18bc50ea274527bb831f6f52"
+  dependencies:
+    tslib "^1.7.1"
+
 "@ngrx/effects@^5.1.0":
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/@ngrx/effects/-/effects-5.1.0.tgz#cef84576b2d0333f19188aedfe156fd301bff70a"

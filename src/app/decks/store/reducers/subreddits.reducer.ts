@@ -17,20 +17,19 @@ export function reducer(
 ): State {
   switch (action.type) {
     case fromSubreddit.INITIALIZE_SUBREDDITS: {
-      action.payload.forEach(id => {
-        const data = {
+      const data = action.payload.map(id => {
+        return {
           id,
-          loading: true,
-          loaded: false,
-          postIds: []
-        };
+          changes: {
+            id,
+            loading: true,
+            loaded: false,
+            postIds: []
+          }
+        }
+      })
 
-        // TODO: Use upsertMany when the method becomes available
-        state = adapter.addOne(data, state);
-        state = adapter.updateOne({ id: data.id, changes: data }, state);
-      });
-
-      return state;
+      return adapter.upsertMany(data, state);
     }
 
     case fromSubreddit.LOAD_SUBREDDIT_POSTS: {

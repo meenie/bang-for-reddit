@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { SwUpdate } from '@angular/service-worker';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs/Subscription';
 import { timer } from 'rxjs/observable/timer';
-import { map, withLatestFrom } from 'rxjs/operators';
 
 import * as fromCore from '../../store';
-import * as VersionActions from '../../store/actions/version.action';
 import * as IdleActions from '../../store/actions/idle.action';
 import { environment } from '../../../../environments/environment';
 
@@ -18,35 +17,37 @@ import { environment } from '../../../../environments/environment';
   }
 })
 export class AppComponent implements OnInit {
-  private versionChecker$: Subscription;
+  private updateChecker$: Subscription;
+  private appUpdater$: Subscription;
 
   constructor(
     angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
-    private store: Store<fromCore.State>
+    private store: Store<fromCore.State>,
+    private swUpdate: SwUpdate
   ) {}
 
   ngOnInit() {
-    const isValid$ = this.store.select(fromCore.getIsVersionValid);
-
-    isValid$.subscribe(isValid => {
-      if (!isValid) {
-        window.location.reload();
-      }
-    });
-
     if (environment.production) {
-      timer(5000, 1000 * 30)
-        .pipe(
-          withLatestFrom(isValid$),
-          map(([_, isValid]) => {
-            return isValid ? new VersionActions.Check() : undefined;
-          })
-        )
-        .subscribe(this.store);
+      this.appUpdater$ = this.swUpdate.available.subscribe(event => {
+        if (event.type == 'UPDATE_AVAILABLE') {
+          this.swUpdate.activateUpdate().then(() => document.location.reload());
+        }
+      });
+
+      this.updateChecker$ = timer(5000, 30e3).subscribe(() => {
+        this.swUpdate.checkForUpdate();
+      });
     }
   }
 
   visibilitychange($event) {
     this.store.dispatch(new IdleActions.SetIdle(document.hidden));
+  }
+
+  ngOnDestory() {
+    if (environment.production) {
+      this.updateChecker$.unsubscribe();
+      this.appUpdater$.unsubscribe();
+    }
   }
 }

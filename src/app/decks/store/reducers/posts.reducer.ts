@@ -14,13 +14,9 @@ export function reducer(
 ): State {
   switch (action.type) {
     case fromSubreddit.LOAD_SUBREDDIT_POSTS_SUCCESS: {
-      // TODO: Use upsertMany when the method becomes available
-      action.payload.posts.forEach(post => {
-        state = adapter.addOne(post, state);
-        state = adapter.updateOne({ id: post.id, changes: post }, state);
-      });
+      const posts = action.payload.posts;
 
-      return state;
+      return adapter.upsertMany(posts.map(post => ({id: post.id, changes: post})), state);
     }
 
     default: {
