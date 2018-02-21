@@ -27,15 +27,17 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.appUpdater$ = this.swUpdate.available.subscribe(event => {
-      if (event.type == 'UPDATE_AVAILABLE') {
-        this.swUpdate.activateUpdate().then(() => document.location.reload());
-      }
-    });
+    if (environment.production) {
+      this.appUpdater$ = this.swUpdate.available.subscribe(event => {
+        if (event.type == 'UPDATE_AVAILABLE') {
+          this.swUpdate.activateUpdate().then(() => document.location.reload());
+        }
+      });
 
-    this.updateChecker$ = timer(5000, 30e3).subscribe(() => {
-      this.swUpdate.checkForUpdate();
-    });
+      this.updateChecker$ = timer(5000, 30e3).subscribe(() => {
+        this.swUpdate.checkForUpdate();
+      });
+    }
   }
 
   visibilitychange($event) {
@@ -43,7 +45,9 @@ export class AppComponent implements OnInit {
   }
 
   ngOnDestory() {
-    this.updateChecker$.unsubscribe();
-    this.appUpdater$.unsubscribe();
+    if (environment.production) {
+      this.updateChecker$.unsubscribe();
+      this.appUpdater$.unsubscribe();
+    }
   }
 }
