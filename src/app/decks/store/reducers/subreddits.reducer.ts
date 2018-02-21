@@ -17,7 +17,6 @@ export function reducer(
 ): State {
   switch (action.type) {
     case fromSubreddit.INITIALIZE_SUBREDDITS: {
-      const subredditIds = action.payload;
       const data = action.payload.map(id => {
         return {
           id,
