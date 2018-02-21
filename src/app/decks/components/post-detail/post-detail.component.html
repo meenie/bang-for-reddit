@@ -1,13 +1,16 @@
-<div class="mr-3">
-  <span class="h5 text-muted mr-1" [title]="post.score">{{ post.score | abbrevNumber }}</span>
-  <small class="text-muted">
-    <a class="text-info" href="https://www.reddit.com/user/{{ post.author }}" target="_blank">{{ post.author }}</a>
-    to
-    <a class="text-info" href="https://www.reddit.com/r/{{ post.subreddit }}" target="_blank">r/{{ post.subreddit }}</a>
-  </small>
-  <br>
-  <a class="text-dark h6" [href]="post.url" target="_blank" [title]="post.title">{{ post.title }}</a>
-  <br>
+<div class="d-flex justify-content-start">
+  <div class="mr-3">
+    <span class="h5 text-muted mr-1" [title]="post.score">{{ post.score | abbrevNumber }}</span>
+    <br>
+    <a class="text-dark h6" [href]="post.url" target="_blank" [title]="post.title">{{ post.title }}</a>
+  </div>
+  <div class="align-self-center ml-auto" *ngIf="post.thumbnail">
+    <a [href]="post.url" target="_blank" >
+      <img [alt]="post.title" [src]="post.thumbnail" class="rounded" width="100" height="55" style="object-fit: cover;">
+    </a>
+  </div>
+</div>
+<div>
   <small class="text-muted">
     <a class="text-secondary" [href]="post.commentsUrl" target="_blank">{{ post.numComments }} Comments</a>
     &middot;
@@ -16,8 +19,9 @@
     </a>
     &middot;
     <span class="text-secondary" [title]="post.created.toLocaleString()">{{ post.created | timeAgo }}</span>
+    <br>
+    Posted by <a class="text-info" href="https://www.reddit.com/user/{{ post.author }}" target="_blank">{{ post.author }}</a>
+    to
+    <a class="text-info" href="https://www.reddit.com/r/{{ post.subreddit }}" target="_blank">r/{{ post.subreddit }}</a>
   </small>
-</div>
-<div class="align-self-center ml-auto" *ngIf="post.thumbnail">
-  <img [alt]="post.title" [src]="post.thumbnail" class="rounded" style="width: 100px;">
 </div>

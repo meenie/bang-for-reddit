@@ -11,7 +11,7 @@
   <h4 *ngIf="! subreddit.loaded && subreddit.loading" class="text-center text-muted mt-5">Loading...</h4>
   <h4 *ngIf="posts.length == 0 && subreddit.loaded" class="text-center text-muted mt-5">Nothin' Bang'n</h4>
   <div *ngIf="subreddit.loaded" class="list-group m-3">
-    <bfr-post-detail *ngFor="let post of posts; trackBy: trackById" class="list-group-item d-flex justify-content-start" [ngClass]="{
+    <bfr-post-detail *ngFor="let post of posts; trackBy: trackById" class="list-group-item" [ngClass]="{
           'list-group-item-warning': post.highlightLevel == 'medium',
           'list-group-item-danger': post.highlightLevel == 'high'
         }" [post]="post">
