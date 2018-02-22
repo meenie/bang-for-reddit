@@ -79,6 +79,23 @@ export function reducer(
       );
     }
 
+    case fromDeck.ADD_SUBREDDIT_TO_DECK: {
+      const { subredditId } = action.payload;
+      const subreddit = state.entities[subredditId] || {
+        id: subredditId,
+        loading: true,
+        loaded: false,
+        postIds: []
+      };
+
+      const upsert = {
+        id: subredditId,
+        changes: subreddit
+      };
+
+      return adapter.upsertOne(upsert, state);
+    }
+
     default: {
       return state;
     }

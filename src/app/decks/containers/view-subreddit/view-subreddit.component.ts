@@ -51,6 +51,10 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
     this.store.dispatch(new fromDeck.SetDeckSubredditType(event));
   }
 
+  onRemoveSubreddit(subredditId: string) {
+    this.store.dispatch(new fromDeck.RemvoveSubredditFromDeck({ subredditId }));
+  }
+
   ngOnInit() {
     this.subreddit$ = this.store
       .select(fromStore.getSubredditEntities)

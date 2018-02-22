@@ -9,6 +9,8 @@ export const PERSIST_DECK = '[Deck] Persist';
 export const ACTIVATE_DECK = '[Deck] Activate';
 export const UPDATE_DECK = '[Deck] Update';
 export const SET_DECK_SUBREDDIT_TYPE = '[Deck] Set Subreddit Type';
+export const ADD_SUBREDDIT_TO_DECK = '[Deck] Add Subreddit';
+export const REMOVE_SUBREDDIT_FROM_DECK = '[Deck] Remove Subreddit';
 
 export class AddDeck implements Action {
   readonly type = ADD_DECK;
@@ -40,9 +42,23 @@ export class SetDeckSubredditType implements Action {
   constructor(public payload: { subredditId: string; type: string }) {}
 }
 
+export class AddSubredditToDeck implements Action {
+  readonly type = ADD_SUBREDDIT_TO_DECK;
+
+  constructor(public payload: { subredditId: string, id?: string }) {}
+}
+
+export class RemvoveSubredditFromDeck implements Action {
+  readonly type = REMOVE_SUBREDDIT_FROM_DECK;
+
+  constructor(public payload: { subredditId: string, id?: string }) {}
+}
+
 export type DeckActions =
   | AddDeck
   | RemoveDeck
   | PersistDeck
   | ActivateDeck
-  | SetDeckSubredditType;
+  | SetDeckSubredditType
+  | AddSubredditToDeck
+  | RemvoveSubredditFromDeck;

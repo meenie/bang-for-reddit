@@ -1,2 +1,7 @@
-<bfr-subreddit-detail [subreddit]="subreddit$ | async" [posts]="posts$ | async" [settings]="settings$ | async" (setType)="onSetType($event)">
+<bfr-subreddit-detail
+    [subreddit]="subreddit$ | async"
+    [posts]="posts$ | async"
+    [settings]="settings$ | async"
+    (setType)="onSetType($event)"
+    (removeSubreddit)="onRemoveSubreddit($event)">
 </bfr-subreddit-detail>

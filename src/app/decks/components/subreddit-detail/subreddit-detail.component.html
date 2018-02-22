@@ -1,5 +1,8 @@
 <h3 class="text-center">
   <a href="https://www.reddit.com/r/{{ subreddit.id }}/{{ settings.type }}" target="_blank">r/{{ subreddit.id }}</a>
+  <small class="remove-subreddit align-text-top">
+    <a (click)="removeSubreddit.emit(subreddit.id)" title="Delete subreddit">&times;</a>
+  </small>
 </h3>
 <p class="text-center">
   <button [ngClass]="{'btn-primary': settings.type == ''}" class="btn btn-sm" (click)="onSetType('')">Hot</button>

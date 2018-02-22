@@ -16,8 +16,12 @@ export class DeckEffects {
   @Effect({ dispatch: false })
   persistDecks$ = this.actions$
     .ofType<
-      fromDeck.AddDeck | fromDeck.RemoveDeck | fromDeck.SetDeckSubredditType
-    >(fromDeck.ADD_DECK, fromDeck.REMOVE_DECK, fromDeck.SET_DECK_SUBREDDIT_TYPE)
+      fromDeck.AddDeck | fromDeck.RemoveDeck | fromDeck.SetDeckSubredditType |
+      fromDeck.AddSubredditToDeck | fromDeck.RemvoveSubredditFromDeck
+    >(
+      fromDeck.ADD_DECK, fromDeck.REMOVE_DECK, fromDeck.SET_DECK_SUBREDDIT_TYPE,
+      fromDeck.ADD_SUBREDDIT_TO_DECK, fromDeck.REMOVE_SUBREDDIT_FROM_DECK
+    )
     .pipe(
       withLatestFrom(this.store.select(fromDeckSelectors.getDecksState)),
       tap(([_, decksState]) =>

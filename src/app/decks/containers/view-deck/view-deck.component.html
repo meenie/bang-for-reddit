@@ -1,8 +1,26 @@
-<bfr-nav-bar [decks]="decks$ | async" (addDeck)=onAddDeck($event) (removeDeck)="onRemoveDeck($event)"></bfr-nav-bar>
+<bfr-nav-bar
+    [decks]="decks$ | async"
+    (addDeck)="onAddDeck($event)"
+    (removeDeck)="onRemoveDeck($event)">
+</bfr-nav-bar>
 <div class="h-100 d-flex">
-  <bfr-view-subreddit class="subreddit-container pb-4 mt-5 pt-4 w-100" *ngFor="let subredditId of currentSubredditIds$ | async"
-    [subredditId]="subredditId">
+  <bfr-view-subreddit
+      class="subreddit-container pb-4 mt-5 pt-4 w-100"
+      *ngFor="let subredditId of currentSubredditIds$ | async"
+      [subredditId]="subredditId">
   </bfr-view-subreddit>
+  <div class="add-subreddit-container pb-4 mt-5 pt-4 w-100">
+    <h3 class="text-center mt-5">Add Subreddit</h3>
+    <form #newSubredditForm="ngForm" class="form-inline justify-content-center my-2 my-lg-0" (ngSubmit)="onSubmit(newSubredditForm)">
+      <input
+          class="form-control mr-sm-2"
+          placeholder="Subreddit"
+          [(ngModel)]="subredditToAdd"
+          name="subredditToAdd"
+          type="text">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Add</button>
+    </form>
+  </div>
 </div>
 <div class="fixed-bottom bg-light">
   <p class="text-center mt-3">

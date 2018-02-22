@@ -64,6 +64,39 @@ export function reducer(
       return adapter.updateOne(update, state);
     }
 
+    case fromDeck.ADD_SUBREDDIT_TO_DECK: {
+      const { subredditId, id = state.currentDeckId } = action.payload;
+      const deck = state.entities[id];
+      let subredditSettings = { ...deck.subredditSettings };
+      let subredditIds = [...deck.subredditIds];
+
+      subredditSettings[subredditId] = { type: 'rising' };
+      subredditIds.push(subredditId);
+
+      const update = {
+        id,
+        changes: { ...deck, subredditIds, subredditSettings }
+      };
+
+      return adapter.updateOne(update, state);
+    }
+
+    case fromDeck.REMOVE_SUBREDDIT_FROM_DECK: {
+      const { subredditId, id = state.currentDeckId } = action.payload;
+      const deck = state.entities[id];
+      const subredditIds = deck.subredditIds.filter(id => subredditId != id);
+      let subredditSettings = { ...deck.subredditSettings };
+
+      delete subredditSettings[subredditId];
+
+      const update = {
+        id,
+        changes: { ...deck, subredditIds, subredditSettings }
+      };
+
+      return adapter.updateOne(update, state);
+    }
+
     default: {
       return state;
     }

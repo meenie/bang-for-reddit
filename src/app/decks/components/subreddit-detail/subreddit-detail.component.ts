@@ -20,6 +20,7 @@ export class SubredditDetailComponent {
   @Input() posts: Post[];
   @Input() settings: { type: string };
   @Output() setType = new EventEmitter<{ subredditId: string; type: string }>();
+  @Output() removeSubreddit = new EventEmitter<string>();
 
   trackById(index, item) {
     return item.id;

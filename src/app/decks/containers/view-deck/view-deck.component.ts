@@ -5,6 +5,7 @@ import { Observable } from 'rxjs/Observable';
 import * as fromStore from '../../store';
 import * as fromDeck from '../../store/actions/deck.action';
 import { Deck } from '../../models/deck.model';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'bfr-view-deck',
@@ -16,6 +17,7 @@ export class ViewDeckComponent {
   currentSubredditIds$: Observable<string[]>;
   decks$: Observable<Deck[]>;
   currentDeckId$: Observable<string>;
+  subredditToAdd: string;
 
   constructor(private store: Store<fromStore.State>) {
     this.currentSubredditIds$ = store.select(
@@ -31,5 +33,11 @@ export class ViewDeckComponent {
 
   onRemoveDeck(event: string) {
     this.store.dispatch(new fromDeck.RemoveDeck(event));
+  }
+
+  onSubmit(form: FormGroup) {
+    const subredditId = this.subredditToAdd.trim();
+    this.store.dispatch(new fromDeck.AddSubredditToDeck({ subredditId }));
+    form.reset();
   }
 }

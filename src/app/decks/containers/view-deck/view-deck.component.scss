@@ -2,6 +2,14 @@
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
 
+.add-subreddit-container {
+  flex: 0 0 50%;
+}
+
+.add-subreddit-container:only-child {
+  flex: 0 0 100%;
+}
+
 .subreddit-container {
   margin-bottom: 9rem;
 }
@@ -19,11 +27,9 @@
 .subreddit-container {
   flex: 0 0 33.333%;
 }
-.subreddit-container:only-child {
-  flex: 0 0 100%;
-}
-.subreddit-container:first-child:nth-last-child(2),
-.subreddit-container:first-child:nth-last-child(2) ~ .subreddit-container {
+.subreddit-container:first-child:nth-last-of-type(1),
+.subreddit-container:first-child:nth-last-of-type(2),
+.subreddit-container:first-child:nth-last-of-type(2) + .subreddit-container {
   flex: 0 0 50%;
 }
 
@@ -38,7 +44,8 @@
 }
 
 @include media-breakpoint-down(md) {
-  .subreddit-container {
+  .subreddit-container,
+  .add-subreddit-container {
     flex: 0 0 100% !important;
   }
 }
