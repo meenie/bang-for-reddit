@@ -31,23 +31,11 @@ export class RedditService {
               // Fuuuuuuuck these guys in particular
               .filter(post => post.data.subreddit != 'The_Donald')
               .map(post => {
-                const score = post.data.score;
-                let highlightLevel;
-
-                if (type == 'rising' && score >= 100 && score < 200) {
-                  highlightLevel = 'medium';
-                } else if (type == 'rising' && score >= 200) {
-                  highlightLevel = 'high';
-                } else {
-                  highlightLevel = 'low';
-                }
-
                 return {
                   id: post.data.id,
                   title: post.data.title,
                   url: post.data.url,
-                  score,
-                  highlightLevel,
+                  score: post.data.score,
                   subreddit: post.data.subreddit,
                   author: post.data.author,
                   thumbnail:
