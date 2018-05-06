@@ -1,0 +1,6 @@
+{
+  "alias": ["bangforreddit.com", "www.bangforreddit.com"],
+  "env": {
+    "NODE_ENV": "production"
+  }
+}

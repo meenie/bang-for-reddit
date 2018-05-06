@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 import { Store } from '@ngrx/store';
@@ -16,7 +16,7 @@ import { environment } from '../../../../environments/environment';
     '(document:visibilitychange)': 'visibilitychange($event)'
   }
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnDestroy {
   private updateChecker$: Subscription;
   private appUpdater$: Subscription;
 
@@ -24,9 +24,8 @@ export class AppComponent implements OnInit {
     angulartics2GoogleAnalytics: Angulartics2GoogleAnalytics,
     private store: Store<fromCore.State>,
     private swUpdate: SwUpdate
-  ) {}
+  ) {
 
-  ngOnInit() {
     if (environment.production) {
       this.appUpdater$ = this.swUpdate.available.subscribe(event => {
         if (event.type == 'UPDATE_AVAILABLE') {
@@ -44,7 +43,7 @@ export class AppComponent implements OnInit {
     this.store.dispatch(new IdleActions.SetIdle(document.hidden));
   }
 
-  ngOnDestory() {
+  ngOnDestroy() {
     if (environment.production) {
       this.updateChecker$.unsubscribe();
       this.appUpdater$.unsubscribe();
