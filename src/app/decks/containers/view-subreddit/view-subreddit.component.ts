@@ -73,14 +73,13 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
       ),
       withLatestFrom(this.settings$),
       map(([posts, settings]) => {
-        if (settings.type == 'new') {
-          posts = posts.sort(
-            (a, b) => b.created.getTime() - a.created.getTime()
-          );
-        }
+        switch (settings.type) {
+          case 'rising':
+            posts = posts.sort((a, b) => b.score - a.score);
+            break;
+          default:
+            posts = posts.sort((a, b) => a.order - b.order);
 
-        if (settings.type == 'rising') {
-          posts = posts.sort((a, b) => b.score - a.score);
         }
 
         return posts;

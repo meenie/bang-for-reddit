@@ -7,10 +7,6 @@ const port = process.env.PORT || '3456';
 
 app.use(useCorrectDomain);
 app.use(express.static(path.join(__dirname, 'dist')));
-// REMOVE AFTER NEXT DEPLOY
-app.get('/version', (req, res) => {
-  res.send(`{"version": "DEPRECATED"}`);
-});
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));
 });

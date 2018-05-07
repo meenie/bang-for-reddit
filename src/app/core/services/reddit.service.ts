@@ -30,9 +30,10 @@ export class RedditService {
             subreddit.data.children
               // Fuuuuuuuck these guys in particular
               .filter(post => post.data.subreddit != 'The_Donald')
-              .map(post => {
+              .map((post, index) => {
                 return {
                   id: post.data.id,
+                  order: index,
                   title: post.data.title,
                   url: post.data.url,
                   score: post.data.score,

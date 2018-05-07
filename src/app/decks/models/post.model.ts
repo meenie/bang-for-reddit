@@ -11,4 +11,5 @@ export interface Post {
   domain: string;
   domainUrl: string;
   created: Date;
+  order: number;
 }
