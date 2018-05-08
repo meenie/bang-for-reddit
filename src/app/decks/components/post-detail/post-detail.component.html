@@ -2,9 +2,7 @@
   <div class="mr-3">
     <span class="h5 text-muted mr-1" [title]="post.score">{{ post.score | abbrevNumber }}</span>
     <br>
-    <a class="text-dark h6 do-not-break-out" [href]="post.url" target="_blank" [title]="post.title">
-      {{ post.title }}
-    </a>
+    <a class="text-dark h6 do-not-break-out" [href]="post.url" target="_blank" [title]="post.title" [innerHTML]="post.title"></a>
   </div>
   <div class="align-self-center ml-auto" *ngIf="post.thumbnail">
     <a [href]="post.url" target="_blank" >
