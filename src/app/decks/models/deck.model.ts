@@ -3,7 +3,7 @@ export interface Deck {
   name: string;
   subredditIds: string[];
   subredditSettings: {
-    [id: string]: {
+    [subredditId: string]: {
       type: string;
     };
   };

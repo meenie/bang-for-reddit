@@ -49,13 +49,27 @@ export function reducer(
 
     case fromSubreddit.LOAD_SUBREDDIT_POSTS_SUCCESS: {
       const subreddit = state.entities[action.payload.id];
+      const postIds = action.payload.posts.map(post => {
+        return {
+          id: post.id,
+          score: post.score,
+          order: post.order
+        }
+      }).sort((a, b) => {
+        switch (action.payload.type) {
+          case 'rising':
+            return b.score - a.score;
+          default:
+            return a.order - b.order;
+        }
+      }).map(post => post.id)
 
       return adapter.updateOne(
         {
           id: action.payload.id,
           changes: {
             ...subreddit,
-            postIds: action.payload.posts.map(post => post.id),
+            postIds,
             loading: false,
             loaded: true
           }

@@ -20,7 +20,7 @@ export class LoadSubredditPosts implements Action {
 export class LoadSubredditPostsSuccess implements Action {
   readonly type = LOAD_SUBREDDIT_POSTS_SUCCESS;
 
-  constructor(public payload: { id: string; posts: Post[] }) {}
+  constructor(public payload: { id: string; type: string, posts: Post[] }) {}
 }
 
 export type SubredditActions =

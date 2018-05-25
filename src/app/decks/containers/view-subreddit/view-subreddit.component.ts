@@ -41,7 +41,7 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
   @Input() subredditId: string;
 
   subredditRefresher$: Subscription;
-  posts$: Observable<Post[]>;
+  posts$: Observable<{ [postId: string]: Post }>;
   subreddit$: Observable<Subreddit>;
   settings$: Observable<{ type: string }>;
 
@@ -66,25 +66,7 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
         filter(([settings, subreddit]) => !! settings[subreddit.id]),
         map(([settings, subreddit]) => settings[subreddit.id])
       );
-    this.posts$ = this.store.select(fromStore.getAllPosts).pipe(
-      withLatestFrom(this.subreddit$),
-      map(([allPosts, subreddit]) =>
-        allPosts.filter(post => subreddit.postIds.includes(post.id))
-      ),
-      withLatestFrom(this.settings$),
-      map(([posts, settings]) => {
-        switch (settings.type) {
-          case 'rising':
-            posts = posts.sort((a, b) => b.score - a.score);
-            break;
-          default:
-            posts = posts.sort((a, b) => a.order - b.order);
-
-        }
-
-        return posts;
-      })
-    );
+    this.posts$ = this.store.select(fromStore.getPostEntities)
 
     this.subredditRefresher$ = combineLatest(this.settings$, this.store.select(fromCoreStore.getIsIdle))
       .pipe(
@@ -106,6 +88,7 @@ export class ViewSubredditComponent implements OnInit, OnDestroy {
                     posts =>
                       new fromSubreddit.LoadSubredditPostsSuccess({
                         id: this.subredditId,
+                        type: settings.type,
                         posts
                       })
                   )

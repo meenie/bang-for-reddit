@@ -17,7 +17,7 @@ import { Subreddit } from '../../models/subreddit.model';
 })
 export class SubredditDetailComponent {
   @Input() subreddit: Subreddit;
-  @Input() posts: Post[];
+  @Input() posts: { [postId: string]: Post };
   @Input() settings: { type: string };
   @Output() setType = new EventEmitter<{ subredditId: string; type: string }>();
   @Output() removeSubreddit = new EventEmitter<string>();
