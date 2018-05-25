@@ -12,7 +12,7 @@
 </p>
 <div class="posts-container">
   <h4 *ngIf="! subreddit.loaded && subreddit.loading" class="text-center text-muted mt-5">Loading...</h4>
-  <h4 *ngIf="posts.length == 0 && subreddit.loaded" class="text-center text-muted mt-5">Nothin' Bang'n</h4>
+  <h4 *ngIf="subreddit.postIds.length == 0 && subreddit.loaded" class="text-center text-muted mt-5">Nothin' Bang'n</h4>
   <div *ngIf="subreddit.loaded" class="list-group m-3">
     <bfr-post-detail *ngFor="let postId of subreddit.postIds" class="list-group-item" [ngClass]="{
           'list-group-item-danger': settings.type == 'rising' && posts[postId].score >= 200,
