@@ -2,8 +2,7 @@ import { Component, OnDestroy } from '@angular/core';
 import { SwUpdate } from '@angular/service-worker';
 import { Angulartics2GoogleAnalytics } from 'angulartics2/ga';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs/Subscription';
-import { timer } from 'rxjs/observable/timer';
+import { Subscription ,  timer } from 'rxjs';
 
 import * as fromCore from '../../store';
 import * as IdleActions from '../../store/actions/idle.action';

@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { tap, map, filter, take, switchMap } from 'rxjs/operators';
 import * as fromStore from '../store';
 import * as fromCoreStore from '../../core/store';

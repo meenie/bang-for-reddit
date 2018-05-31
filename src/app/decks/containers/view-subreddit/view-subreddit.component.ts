@@ -6,14 +6,10 @@ import {
   OnDestroy
 } from '@angular/core';
 import { EventEmitter } from '@angular/core';
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription, Observable, timer, combineLatest } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 
 import { Store } from '@ngrx/store';
-
-import { Observable } from 'rxjs/Observable';
-import { timer } from 'rxjs/observable/timer';
-import { combineLatest } from 'rxjs/observable/combineLatest';
 
 import {
   map,

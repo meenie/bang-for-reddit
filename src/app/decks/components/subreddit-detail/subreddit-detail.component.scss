@@ -5,5 +5,16 @@
 
 .remove-subreddit {
   cursor: pointer;
-  font-size: 60%
+  font-size: 60%;
+  margin-left: 5px;
+}
+
+.settings-container {
+  > button {
+    margin-left: 5px;
+  }
+
+  > button:first-child {
+    margin-left: 0px;
+  }
 }

@@ -4,7 +4,7 @@
     <a (click)="removeSubreddit.emit(subreddit.id)" title="Delete subreddit">&times;</a>
   </small>
 </h3>
-<p class="text-center">
+<p class="text-center settings-container">
   <button [ngClass]="{'btn-primary': settings.type == ''}" class="btn btn-sm" (click)="onSetType('')">Hot</button>
   <button [ngClass]="{'btn-primary': settings.type == 'rising'}" class="btn btn-sm" (click)="onSetType('rising')">Rising</button>
   <button [ngClass]="{'btn-primary': settings.type == 'new'}" class="btn btn-sm" (click)="onSetType('new')">New</button>

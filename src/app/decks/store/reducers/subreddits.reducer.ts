@@ -20,12 +20,9 @@ export function reducer(
       const data = action.payload.map(id => {
         return {
           id,
-          changes: {
-            id,
-            loading: true,
-            loaded: false,
-            postIds: []
-          }
+          loading: true,
+          loaded: false,
+          postIds: []
         }
       })
 
@@ -102,12 +99,7 @@ export function reducer(
         postIds: []
       };
 
-      const upsert = {
-        id: subredditId,
-        changes: subreddit
-      };
-
-      return adapter.upsertOne(upsert, state);
+      return adapter.upsertOne(subreddit, state);
     }
 
     default: {

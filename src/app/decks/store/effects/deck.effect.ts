@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Action, Store } from '@ngrx/store';
 import { Effect, Actions } from '@ngrx/effects';
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { filter, map, tap, withLatestFrom } from 'rxjs/operators';
 
 import { LocalStorageService } from '../../../core/services/local-storage.service';

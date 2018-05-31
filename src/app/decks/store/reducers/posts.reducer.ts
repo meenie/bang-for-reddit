@@ -14,9 +14,7 @@ export function reducer(
 ): State {
   switch (action.type) {
     case fromSubreddit.LOAD_SUBREDDIT_POSTS_SUCCESS: {
-      const posts = action.payload.posts;
-
-      return adapter.upsertMany(posts.map(post => ({id: post.id, changes: post})), state);
+      return adapter.upsertMany(action.payload.posts, state);
     }
 
     default: {
