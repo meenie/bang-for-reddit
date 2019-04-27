@@ -29,11 +29,15 @@ export class RedditService {
               // Fuuuuuuuck these guys in particular
               .filter(post => post.data.subreddit != 'The_Donald')
               .map((post, index) => {
+                let url = post.data.url;
+                if (post.data.media && post.data.media.reddit_video && post.data.media.reddit_video.fallback_url) {
+                  url = post.data.media.reddit_video.fallback_url
+                }
                 return {
                   id: post.data.id,
                   order: index,
                   title: post.data.title,
-                  url: post.data.url,
+                  url,
                   score: post.data.score,
                   subreddit: post.data.subreddit,
                   author: post.data.author,
